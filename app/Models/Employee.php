@@ -27,11 +27,8 @@ class Employee extends Model
         'status',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
-    public function dailywork() {
-        return $this->belongsTo(DailyWork::class);
     }
 }

@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('daily_works', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id');
-            $table->date('date');
-            $table->string('project');
-            $table->string('turl');
-            $table->text('tdescription');
-            $table->date('tsdate');
-            $table->date('tedate');
-            $table->string('hours');
+            $table->dateTime('time');
+            $table->string('vpn')->default('no');
+            $table->string('work')->default('no');
+            $table->string('ip')->nullable();
+            $table->string('project')->nullable();
+            $table->string('turl')->nullable();
+            $table->text('tdescription')->nullable();
+            $table->dateTime('start');
+            $table->dateTime('end')->nullable();
+            $table->string('hours')->nullable();
+            $table->string('running')->default('yes');
             $table->string('status')->default('pending');
             $table->timestamps();
         });

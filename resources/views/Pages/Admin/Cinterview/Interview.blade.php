@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/cute.css">
 @endsection
 @section('content')
-<div class="px-10 bg-white py-5 rounded-3 shadow-lg">
+<div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
     <div class="flex justify-between">
-        <h3 class="text-black font-sans font-medium text-xl">Interview List</h3>
+        <h3 class="text-black font-sans font-medium text-xl dark:text-white">Interview List</h3>
         <a href="{{ url('/add-candidate-interview') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
             Add Interview
         </a>
@@ -26,25 +26,25 @@
                     <thead class="align-bottom">
                         <tr>
                             <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Candidate Name</th>
                             <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Candidate Email</th>
                             <th
-                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Role</th>
                             <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Time</th>
                             <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 URL</th>
                             <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Status</th>
                             <th
-                                class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                class="px-6 dark:text-white py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
                             </th>
                         </tr>
                     </thead>
@@ -53,31 +53,31 @@
                         <tr class="parent">
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                     {{$item->name}}</p>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                 <div class="flex px-2 py-1">
                                     <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 text-sm leading-normal dark:text-slate-400">{{ $item->email }}</h6>
+                                        <h6 class="mb-0 text-sm leading-normal  dark:text-white">{{ $item->email }}</h6>
 
                                     </div>
                                 </div>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                     {{ $item->role }}</p>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                     {{ $item->time }}</p>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <a href="{{ $item->url }}" class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                <a href="{{ $item->url }}" class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                     {{ $item->url }}</a>
                             </td>
                             <td
@@ -103,6 +103,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-5">
+                    {{ $data->links() }}
+                </div>
             </div>
         </div>
     </div>

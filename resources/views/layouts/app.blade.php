@@ -5,24 +5,27 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2022/06/favicon-32x32-1.png">
+    <link rel="icon" type="image/png"
+        href="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2022/06/favicon-32x32-1.png">
 
     {{-- <title>{{ config('app.name', 'TechSpotDev TimeTracker') }}</title> --}}
     <title>{{ _('TechSpotDev - ') }}
         @if ($page == 'dashboard')
-        Dashboard
+            Dashboard
         @elseif ($page == 'employee')
-        Manage Employee
+            Manage Employee
         @elseif ($page == 'dailywork')
-        Daily Work Update
+            Daily Work Update
+        @elseif ($page == 'weeklyupdate')
+            Weekly Update
         @elseif ($page == 'interview')
-        Manage Company Interview
+            Manage Company Interview
         @elseif ($page == 'candidate_interview')
-        Manage Candidate Interview
+            Manage Candidate Interview
         @elseif ($page == 'login')
-        Login
+            Login
         @elseif ($page == 'profile')
-        Profile
+            Profile
         @endif
     </title>
     <!-- Fonts -->
@@ -56,7 +59,7 @@
 
     <!-- sidenav  -->
     @auth
-        <livewire:common.sidenav :page="$page"/>
+        <livewire:common.sidenav :page="$page" />
     @endauth
     <main class="relative h-full min-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
         @auth
@@ -84,24 +87,26 @@
                                     class="dd-btn block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
                                     <i class="fa fa-user sm:mr-1"></i>
                                     @auth
-                                    <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
+                                        <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
                                     @endauth
                                 </a>
                             </li>
                             <li class="flex items-center pl-4 xl:hidden mr-3">
-                                <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand" sidenav-trigger>
-                                  <div class="w-4.5 overflow-hidden">
-                                    <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                                    <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                                    <i class="ease relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                                  </div>
+                                <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand"
+                                    sidenav-trigger>
+                                    <div class="w-4.5 overflow-hidden">
+                                        <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                                        <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                                        <i class="ease relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                                    </div>
                                 </a>
-                              </li>
+                            </li>
                             <li class="flex items-center mr-3">
                                 <label class="inline-flex relative items-center cursor-pointer">
                                     <input dark-toggle type="checkbox" value="" class="sr-only peer">
                                     <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-                                    <div class="absolute text-center w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition peer-checked:translate-x-full peer-checked:bg-black">
+                                    <div
+                                        class="absolute text-center w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition peer-checked:translate-x-full peer-checked:bg-black">
                                         <i class="toggleicon fa-regular fa-moon text-black dark:text-white"></i>
                                     </div>
                                 </label>

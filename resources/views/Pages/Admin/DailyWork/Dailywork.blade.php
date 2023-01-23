@@ -12,13 +12,15 @@
     Daily Work List
 @endsection
 @section('content')
-    <div class="px-10 bg-white py-5 rounded-3 shadow-lg">
+    <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
         <div class="flex justify-between">
-            <h3 class="text-black font-sans font-medium text-xl">Daily Work List</h3>
-            <a href="{{ url('/adddailywork') }}"
-                class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
-                Add Daily Work Update
-            </a>
+            <h3 class="text-black font-sans font-medium text-xl dark:text-white">Daily Work List</h3>
+            <select class="py-2 focus:outline-none rounded" onchange="dailyUpdate(this)">
+                <option value="0">Select User</option>
+                @foreach ($users as $user)
+                <option {{ $user->id == $id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->information->fname. ' ' . $user->information->lname }}</option>
+                @endforeach
+            </select>
         </div>
         <div>
             <div class="flex-auto px-0 pt-0 pb-2">
@@ -27,29 +29,35 @@
                         <thead class="align-bottom">
                             <tr>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     ID</th>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Full Name</th>
-                                <th
-                                    class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Date</th>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    Full Name</th>
+                                <th
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    VPN</th>
+                                <th
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    Work</th>
+                                <th
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    IP</th>
+                                <th
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Project name</th>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Task URL</th>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Status</th>
                                 <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Spent Hours</th>
-                                <th
-                                    class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,15 +65,20 @@
                                 <tr class="work">
                                     <td
                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                             {{ strlen($item->employee_id) == 1 ? 'TSD00' . $item->employee_id : (strlen($item->employee_id) == 2 ? 'TSD0' . $item->employee_id : 'TSD' . $item->employee_id) }}
                                         </p>
                                     </td>
                                     <td
                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
+                                            {{ \Carbon\Carbon::parse($item->time)->format('M d Y') }}</p>
+                                    </td>
+                                    <td
+                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                         <div class="flex px-2 py-1">
                                             <div class="flex flex-col justify-center">
-                                                <h6 class="mb-0 text-sm leading-normal dark:text-slate-400">
+                                                <h6 class="mb-0 text-sm leading-normal  dark:text-white">
                                                     @if ($item->employee != null)
                                                         {{ $item->employee->fname . ' ' . $item->employee->lname }}
                                                     @endif
@@ -75,12 +88,23 @@
                                     </td>
                                     <td
                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
-                                            {{ $item->date }}</p>
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
+                                            {{ $item->vpn }}</p>
                                     </td>
                                     <td
                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                        <p class="mb-0 text-xs font-semibold leading-tight dark:text-slate-400 ">
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
+                                            {{ $item->work }}</p>
+                                    </td>
+                                    <td
+                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
+                                            {{ $item->ip }}</p>
+                                    </td>
+
+                                    <td
+                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                        <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                             {{ $item->project }}</p>
                                     </td>
                                     <td
@@ -98,12 +122,12 @@
                                             </span>
                                         @endif
                                         @if (Auth::user()->role == 'admin')
-                                            <select class="py-0 rounded-1" statusUpdate data-id="{{ $item->id }}">
+                                            <select class="py-0 rounded-1" onchange="statusUpdate(this)" data-id="{{ $item->id }}">
                                                 <option @if ($item->status == 'approved') selected @endif value="approved">
                                                     Approved</option>
                                                 <option @if ($item->status == 'pending') selected @endif value="pending">
                                                     Pending</option>
-                                                <option @if ($item->status == 'rejected') selected @endif value="rejected">
+                                                <option @if ($item->status == 'decline') selected @endif value="decline">
                                                     Rejected</option>
                                             </select>
                                         @endif
@@ -111,27 +135,15 @@
                                     <td
                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                         <span
-                                            class="text-xs font-semibold leading-tight dark:text-slate-400  text-slate-400">{{ $item->hours }}</span>
-                                    </td>
-                                    <td
-                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent flex justify-evenly">
-                                        <a href="{{ url('/dailywork') }}/{{ $item->id }}"
-                                            class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        <a href="{{ url('/dailyworkedit') }}/{{ $item->id }}"
-                                            class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <a data-url="{{ url('/deletework') }}/{{ $item->id }}" onclick="confirm(this)"
-                                            class="py-2.5 px-3 bg-red-500 rounded-1 text-white">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+                                            class="text-xs font-semibold leading-tight  dark:text-white  text-slate-400">{{ $item->hours }}</span>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-5">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,33 +155,48 @@
     <script src="{{ url('/') }}/assets/js/cute-alert.js"></script>
     <script src="{{ url('/') }}/assets/js/custom.js"></script>
     <script>
+        @if (session('errors'))
+            $.toaster('{{ session('message') }}', '', 'danger bg-green-500 py-3 px-2 rounded-2 text-white');
+        @endif
         @if (session('message'))
             $.toaster('{{ session('message') }}', '', 'danger bg-green-500 py-3 px-2 rounded-2 text-white');
         @endif
         @if (session('error'))
             $.toaster('{{ session('message') }}', '', 'danger bg-red-500 py-3 px-2 rounded-2 text-white');
         @endif
-        function confirm (e) {
+        function confirm(e) {
             cuteAlert({
-            type: "question",
-            title: "Are You Sure?",
-            message: "You Want To Remove This Data",
-            buttonText: "Okay"
+                type: "question",
+                title: "Are You Sure?",
+                message: "You Want To Remove This Data",
+                buttonText: "Okay"
             }).then((result) => {
                 if (result === 'confirm') {
                     $.ajax({
                         type: "get",
                         url: e.dataset.url,
-                        success: function (response) {
+                        success: function(response) {
                             e.closest('.work').remove();
-                            $.toaster(response, '', 'danger bg-green-500 py-3 px-2 rounded-2 text-white');
+                            $.toaster(response, '',
+                                'danger bg-green-500 py-3 px-2 rounded-2 text-white');
                         },
-                        error: function (err) {
-                            $.toaster(err.statusText, '', 'danger bg-red-500 py-3 px-2 rounded-2 text-white');
+                        error: function(err) {
+                            $.toaster(err.statusText, '',
+                                'danger bg-red-500 py-3 px-2 rounded-2 text-white');
                         }
                     });
                 }
             })
+        }
+
+        const dailyUpdate = (item) => {
+            const value = item.value;
+            if (value == 0) {
+                window.location.href = `{{ url('admin/dailywork') }}`;
+            }
+            else{
+                window.location.href = `{{ url('admin/getDailyWork') }}/${value}`;
+            }
         }
     </script>
 @endsection

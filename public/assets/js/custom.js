@@ -1,15 +1,15 @@
-let statusUpdate = document.querySelector("[statusUpdate]");
 let token = document.getElementsByTagName("meta")[0].content;
 
-statusUpdate.addEventListener("change", function () {
-    const id = this.dataset.id;
+function statusUpdate(data) {
+    const id = data.dataset.id;
+    const url = window.location.origin;
     $.ajax({
         type: "post",
-        url: "/dailystatus",
+        url: `${url}/admin/dailystatus`,
         data: {
             _token: token,
             id: id,
-            status: this.value,
+            status: data.value,
         },
         success: function (response) {
             $.toaster(
@@ -18,5 +18,8 @@ statusUpdate.addEventListener("change", function () {
                 "danger bg-green-500 py-3 px-2 rounded-2 text-white"
             );
         },
+        error: function (response) {
+            console.log(response);
+        },
     });
-});
+}

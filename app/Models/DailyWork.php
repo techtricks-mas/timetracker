@@ -11,17 +11,22 @@ class DailyWork extends Model
 
     protected $fillable = [
         'employee_id',
-        'date',
+        'time',
+        'vpn',
+        'work',
+        'ip',
         'project',
         'turl',
         'tdescription',
-        'tsdate',
-        'tedate',
+        'start',
+        'end',
         'hours',
+        'running',
         'status',
     ];
 
-    public function employee() {
-        return $this->hasOne(Employee::class, 'id', 'employee_id');
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'user_id', 'employee_id');
     }
 }

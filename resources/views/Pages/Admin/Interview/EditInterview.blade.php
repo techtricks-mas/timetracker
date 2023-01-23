@@ -12,7 +12,7 @@
     Edit Interview
 @endsection
 @section('content')
-    <div class="px-10 bg-white py-5 rounded-3 shadow-lg">
+    <div class="px-10 bg-white py-5 rounded-3 shadow-lg  dark:bg-slate-850 dark:shadow-dark-xl">
         <div class="flex justify-between">
             <h6 class="text-slate-700 text-xl">Edit Interview</h6>
         </div>
@@ -22,7 +22,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block  text-sm" for="firstName">Select Employee <span class="text-red-500">*</span></label>
                         <select value="{{ $data->employee }}"
-                            class="@error('employee') border-red-500 @enderror px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                            class="@error('employee') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
                             name="employee" required>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->id }}" @if ($data->employee == $employee->id) selected @endif>
@@ -38,7 +38,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="firstName">Select Candidate Name <span class="text-red-500">*</span></label>
                         <select value="{{ old('candidate') }}"
-                            class="@error('candidate') border-red-500 @enderror px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                            class="@error('candidate') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
                             name="candidate">
                             @foreach ($candidates as $candidate)
                                 <option @if ( $candidate->user->name == $data->candidate) selected @endif value="{{ $candidate->user->name }}">
@@ -56,7 +56,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block  text-sm" for="company">Company name <span class="text-red-500">*</span></label>
                         <input id="company" type="text"  value="{{ $data->company }}"
-                            class="@error('company') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('company') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="company" />
                         @error('company')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
@@ -65,7 +65,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="interviewer">Interviewer name <span class="text-red-500">*</span></label>
                         <input id="interviewer" type="text" value="{{ $data->interviewer }}"
-                            class="@error('interviewer') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('interviewer') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="interviewer" />
                         @error('interviewer')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
@@ -76,7 +76,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block text-sm" for="role">Role <span class="text-red-500">*</span></label>
                         <input id="role" type="text" value="{{ $data->role }}"
-                            class="@error('role') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('role') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="role" />
                         @error('role')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
@@ -85,7 +85,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="time">Interviewer Timing <span class="text-red-500">*</span></label>
                         <input id="time" type="datetime-local" value="{{ \Carbon\Carbon::parse($data->time)->format('Y-m-d\TH:i') }}"
-                            class="@error('time') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('time') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="time" />
                         @error('time')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
@@ -97,7 +97,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block  text-sm" for="description">Job Description <span class="text-red-500">*</span></label>
                         <textarea id="description" type="text"
-                            class="@error('description') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('description') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="description">{{ $data->job }}</textarea>
                         @error('description')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
@@ -106,7 +106,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="Url">Url <span class="text-red-500">*</span></label>
                         <input id="Url" name="url" type="text" value="{{ $data->url }}"
-                            class="@error('Url') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
+                            class="@error('Url') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
                         @error('Url')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
@@ -117,7 +117,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block text-sm" for="status">Status <span class="text-red-500">*</span></label>
                         <select
-                            class="@error('status') border-red-500 @enderror px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                            class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
                             name="status">
                             <option @if ($data->status == 'scheduled') selected @endif value="scheduled" selected>Scheduled</option>
                             <option @if ($data->status == 'done') selected @endif value="done">Done</option>
@@ -132,7 +132,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block text-sm" for="reply">Company Reply</label>
                         <input id="reply" name="reply" type="text" value="{{ $data->reply }}"
-                            class="@error('reply') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
+                            class="@error('reply') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
                         @error('reply')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
@@ -143,7 +143,7 @@
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block text-sm" for="reason">Reason for Rejection </label>
                         <input id="reason" name="reason" type="text" value="{{ $data->reason }}"
-                            class="@error('reason') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
+                            class="@error('reason') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
                         @error('reason')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
@@ -151,7 +151,7 @@
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="comment">Additional Comments</label>
                         <textarea id="comment"
-                            class="@error('comment') border-red-500 @enderror px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            class="@error('comment') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="comment">{{ $data->comment }}</textarea>
                         @error('comment')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
