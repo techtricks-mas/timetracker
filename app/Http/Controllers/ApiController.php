@@ -44,6 +44,9 @@ class ApiController extends Controller
         } elseif ($request->get == 3) {
             $weekData = DailyWork::where('employee_id', $id)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->orderBy('id', 'desc')->get();
         }
+        else{
+            $weekData = [];
+        }
         $currentSeconds = 0;
         foreach ($weekData as $key => $value) {
             $currentSeconds = $currentSeconds + $this->timeToSeconds($value->hours);
@@ -66,6 +69,9 @@ class ApiController extends Controller
             $weekData = DailyWork::where('employee_id', $id)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->get();
         } elseif ($request->get == 3) {
             $weekData = DailyWork::where('employee_id', $id)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->orderBy('id', 'desc')->get();
+        }
+        else{
+            $weekData = [];
         }
         $currentSeconds = 0;
         foreach ($weekData as $key => $value) {
@@ -108,6 +114,9 @@ class ApiController extends Controller
         } elseif ($request->current == 3) {
             $currentweek = DailyWork::where('employee_id', $current->employee_id)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->orderBy('id', 'desc')->get();
         }
+        else{
+            $currentweek = [];
+        }
         $currentSeconds = 0;
         foreach ($currentweek as $key => $value) {
             $currentSeconds = $currentSeconds + $this->timeToSeconds($value->hours);
@@ -136,6 +145,9 @@ class ApiController extends Controller
             $currentweek = DailyWork::where('employee_id', $request->client)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('id', 'desc')->get();
         } elseif ($request->current == 3) {
             $currentweek = DailyWork::where('employee_id', $request->client)->where('running', 'no')->whereBetween('created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()])->orderBy('id', 'desc')->get();
+        }
+        else{
+            $currentweek = [];
         }
         $currentSeconds = 0;
         foreach ($currentweek as $key => $value) {

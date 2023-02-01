@@ -17,7 +17,7 @@
             <h6 class="text-slate-700 text-xl">Add Candidate Interview</h6>
         </div>
         <div>
-            <form method="POST" action="{{ url('/submitcandidatetinterview') }}" name="form">
+            <form method="POST" action="{{ route('admin.submicandidatetinterview') }}" name="form">
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block  text-sm" for="name">Candidate name <span class="text-red-500">*</span></label>

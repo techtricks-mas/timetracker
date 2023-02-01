@@ -15,7 +15,7 @@
 <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
     <div class="flex justify-between">
         <h3 class="text-black font-sans font-medium text-xl dark:text-white">Interview List</h3>
-        <a href="{{ url('/add-candidate-interview') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
+        <a href="{{ route('admin.addcandidateinterview') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
             Add Interview
         </a>
     </div>
@@ -89,13 +89,13 @@
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent flex justify-evenly">
-                                <a href="{{ url('/view-candidate-interview') }}/{{ $item->id }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                <a href="{{ route('admin.viewcandidateinterview', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a href="{{ url('/edit-candidate-interview') }}/{{ $item->id }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                <a href="{{ route('admin.editcandidateinterview', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a data-url="{{ url('/delete-candidate-interview') }}/{{ $item->id }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
+                                <a data-url="{{ route('admin.deletecandidateinterview', $item->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>
