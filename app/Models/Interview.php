@@ -13,14 +13,10 @@ class Interview extends Model
         'employee_id',
         'name',
         'company',
-        'interviewer',
         'role',
-        'time',
-        'job',
-        'url',
+        'remail',
+        'rphone',
         'status',
-        'reply',
-        'reason',
         'comment',
     ];
 }

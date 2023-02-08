@@ -17,7 +17,7 @@
             <h6 class="text-slate-700 text-xl dark:text-white">Edit Interview</h6>
         </div>
         <div>
-            <form method="POST" action="{{ url('/updateinterview') }}" name="form">
+            <form method="POST" action="{{ route('user.updateinterview') }}" name="form">
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block  text-sm" for="firstName">Select Employee <span class="text-red-500">*</span></label>
@@ -63,17 +63,6 @@
                         @enderror
                     </div>
                     <div class="w-full md:w-1/2 md:ml-2">
-                        <label class="block  text-sm" for="interviewer">Interviewer name <span class="text-red-500">*</span></label>
-                        <input id="interviewer" type="text" value="{{ $data->interviewer }}"
-                            class="@error('interviewer') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
-                            name="interviewer" />
-                        @error('interviewer')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="md:flex py-3">
-                    <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block text-sm" for="role">Role <span class="text-red-500">*</span></label>
                         <input id="role" type="text" value="{{ $data->role }}"
                             class="@error('role') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
@@ -82,37 +71,28 @@
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
+                <div class="md:flex py-3">
+                    <div class="w-full md:w-1/2 md:mr-2">
+                        <label class="block  text-sm" for="remail">Recruiter Email <span class="text-red-500">*</span></label>
+                        <input id="remail" type="email" value="{{ $data->remail }}"
+                            class="@error('remail') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            name="remail" />
+                        @error('remail')
+                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="w-full md:w-1/2 md:ml-2">
-                        <label class="block  text-sm" for="time">Interviewer Timing <span class="text-red-500">*</span></label>
-                        <input id="time" type="datetime-local" value="{{ \Carbon\Carbon::parse($data->time)->format('Y-m-d\TH:i') }}"
-                            class="@error('time') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
-                            name="time" />
-                        @error('time')
+                        <label class="block  text-sm" for="rphone">Recruiter Phone <span class="text-red-500">*</span></label>
+                        <input id="rphone" type="number" value="{{ $data->rphone }}"
+                            class="@error('rphone') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            name="rphone" />
+                        @error('rphone')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
                 @csrf
-                <div class="md:flex py-3">
-                    <div class="w-full md:w-1/2 md:mr-2">
-                        <label class="block  text-sm" for="description">Job Description <span class="text-red-500">*</span></label>
-                        <textarea id="description" type="text"
-                            class="@error('description') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
-                            name="description">{{ $data->job }}</textarea>
-                        @error('description')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-full md:w-1/2 md:ml-2">
-                        <label class="block  text-sm" for="Url">Url <span class="text-red-500">*</span></label>
-                        <input id="Url" name="url" type="text" value="{{ $data->url }}"
-                            class="@error('Url') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
-                        @error('Url')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                </div>
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
                         <label class="block text-sm" for="status">Status <span class="text-red-500">*</span></label>
@@ -130,25 +110,6 @@
                         @enderror
                     </div>
                     <div class="w-full md:w-1/2 md:ml-2">
-                        <label class="block text-sm" for="reply">Company Reply</label>
-                        <input id="reply" name="reply" type="text" value="{{ $data->reply }}"
-                            class="@error('reply') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
-                        @error('reply')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                </div>
-                <div class="md:flex py-3">
-                    <div class="w-full md:w-1/2 md:mr-2">
-                        <label class="block text-sm" for="reason">Reason for Rejection </label>
-                        <input id="reason" name="reason" type="text" value="{{ $data->reason }}"
-                            class="@error('reason') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full" />
-                        @error('reason')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="comment">Additional Comments</label>
                         <textarea id="comment"
                             class="@error('comment') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
@@ -157,7 +118,6 @@
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
-
                 </div>
                 <div class="text-center">
                     <button type="submit" class="w-1/2 py-2 rounded-2 text-white bg-blue-500 mt-5 submitbutton">Submit</button>
@@ -183,21 +143,17 @@
                     employee: "required",
                     candidate: "required",
                     company: "required",
-                    interviewer: "required",
                     role: "required",
-                    time: "required",
-                    description: "required",
-                    url: "required",
+                    remail: "required",
+                    rphone: "required",
                 },
                 messages: {
                     employee: "Select An Employee",
                     candidate: "Select A Candidate",
                     company: "Company Field Required",
-                    interviewer: "Interviewer Field Required",
                     role: "Role Field Required",
-                    time: "Interview Timing Required",
-                    description: "Job Description Required",
-                    url: "URL Field Required",
+                    remail: "Recruiter Email Required",
+                    rphone: "Recruiter Phone Required"
                 },
                 invalidHandler: function(form, validator) {
                 if (!validator.numberOfInvalids())

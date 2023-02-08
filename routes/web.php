@@ -33,9 +33,9 @@ Route::get('/dashboard', function () {
     if (Auth::user()->role == 'admin') {
         return redirect()->route('admin.dashboard');
     } elseif (Auth::user()->role == 'employee') {
-        return redirect()->route('user.dailywork');
+        return redirect()->route('user.dashboard');
     } elseif (Auth::user()->role == 'candidate') {
-        return redirect()->route('candidate.dailywork');
+        return redirect()->route('candidate.interview');
     }
 });
 
@@ -56,9 +56,9 @@ Route::name('admin.')->middleware(['auth', 'verified', 'role:admin,null,null'])-
     Route::get('/deleteemployee/{id}', [AdminEmployeeController::class, 'deleteemployee'])->name('deleteemployee');
 
     // Daily Work Routes
-    Route::get('/dailywork', [AdminDailyworkController::class, 'dailywork'])->name('dailywork');
-    Route::get('/getDailyWork/{id}', [AdminDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
-    Route::post('/dailystatus', [AdminDailyworkController::class, 'dailystatus'])->name('dailystatus');
+    // Route::get('/dailywork', [AdminDailyworkController::class, 'dailywork'])->name('dailywork');
+    // Route::get('/getDailyWork/{id}', [AdminDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
+    // Route::post('/dailystatus', [AdminDailyworkController::class, 'dailystatus'])->name('dailystatus');
 
     // Weekly Update Routes
     Route::get('/weeklyupdate', [AdminWeeklyUpdateController::class, 'weeklyupdate'])->name('weeklyupdate');
@@ -84,15 +84,27 @@ Route::name('admin.')->middleware(['auth', 'verified', 'role:admin,null,null'])-
     Route::get('/delete-candidate-interview/{id}', [AdminInterviewController::class, 'deletecandidateinterview'])->name('deletecandidateinterview');
 });
 Route::name('user.')->middleware(['auth', 'verified', 'role:null,employee,null'])->prefix('user')->group(function () {
+    Route::get('/dashboard', [CommonController::class, 'dashboard'])->name('dashboard');
     // Daily Work Routes
-    Route::get('/dailywork', [UserDailyworkController::class, 'dailywork'])->name('dailywork');
-    Route::get('/getDailyWork/{id}', [UserDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
-    Route::post('/dailystatus', [UserDailyworkController::class, 'dailystatus'])->name('dailystatus');
+    // Route::get('/dailywork', [UserDailyworkController::class, 'dailywork'])->name('dailywork');
+    // Route::get('/getDailyWork/{id}', [UserDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
+    // Route::post('/dailystatus', [UserDailyworkController::class, 'dailystatus'])->name('dailystatus');
 
     // Weekly Update Routes
     Route::get('/weeklyupdate', [UserWeeklyUpdateController::class, 'weeklyupdate'])->name('weeklyupdate');
+    Route::get('/addweeklyupdate', [UserWeeklyUpdateController::class, 'addweeklyupdate'])->name('addweeklyupdate');
+    Route::post('/postweeklyupdate', [UserWeeklyUpdateController::class, 'postweeklyupdate'])->name('postweeklyupdate');
     Route::get('/weekUpdate/{id}', [UserWeeklyUpdateController::class, 'weekUpdateView'])->name('weekUpdateView');
     Route::get('/weeklyupdate/{date}', [UserWeeklyUpdateController::class, 'WeekDatadate'])->name('WeekDatadate');
+
+    // Interview Routes
+    Route::get('/interview', [UserInterviewController::class, 'interview'])->name('interview');
+    Route::get('/addinterview', [UserInterviewController::class, 'addinterview'])->name('addinterview');
+    Route::get('/viewinterview/{id}', [UserInterviewController::class, 'viewinterview'])->name('viewinterview');
+    Route::get('/interviewedit/{id}', [UserInterviewController::class, 'interviewedit'])->name('interviewedit');
+    Route::post('/submitinterview', [UserInterviewController::class, 'submitinterview'])->name('submitinterview');
+    Route::post('/updateinterview', [UserInterviewController::class, 'updateinterview'])->name('updateinterview');
+    Route::get('/deletinterview/{id}', [UserInterviewController::class, 'deletinterview'])->name('deletinterview');
 
     // Candidate Interview Routes
     Route::get('/candidate-interview', [UserInterviewController::class, 'candidate_interview'])->name('candidate_interview');
@@ -106,9 +118,9 @@ Route::name('user.')->middleware(['auth', 'verified', 'role:null,employee,null']
 Route::name('candidate.')->middleware(['auth', 'verified', 'role:null,null,candidate'])->prefix('candidate')->group(function () {
 
     // Daily Work Routes
-    Route::get('/dailywork', [CandidateDailyworkController::class, 'dailywork'])->name('dailywork');
-    Route::get('/getDailyWork/{id}', [CandidateDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
-    Route::post('/dailystatus', [CandidateDailyworkController::class, 'dailystatus'])->name('dailystatus');
+    // Route::get('/dailywork', [CandidateDailyworkController::class, 'dailywork'])->name('dailywork');
+    // Route::get('/getDailyWork/{id}', [CandidateDailyworkController::class, 'getDailyWork'])->name('getDailyWork');
+    // Route::post('/dailystatus', [CandidateDailyworkController::class, 'dailystatus'])->name('dailystatus');
 
     // Weekly Update Routes
     Route::get('/weeklyupdate', [CandidateWeeklyUpdateController::class, 'weeklyupdate'])->name('weeklyupdate');

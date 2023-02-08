@@ -59,21 +59,12 @@
                     </div>
                 </div>
                 <div class="md:flex py-3">
-                    <div class="w-full md:w-1/2 md:mr-2">
+                    <div class="w-full md:mr-2">
                         <label class="block  text-sm" for="description">Job Description <span class="text-red-500">*</span></label>
                         <textarea id="description" type="text"
                             class="@error('description') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="description">{{ old('description') }}</textarea>
                         @error('description')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-full md:w-1/2 md:ml-2">
-                        <label class="block  text-sm" for="url">URL <span class="text-red-500">*</span></label>
-                        <input id="url" type="text" value="{{ old('url') }}"
-                            class="@error('url') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
-                            name="url" />
-                        @error('url')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>

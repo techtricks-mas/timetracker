@@ -11,6 +11,125 @@ use Illuminate\Http\Request;
 
 class InterviewController extends Controller
 {
+    public function interview()
+    {
+        $page = 'interview';
+        $data = Interview::orderBy('id', 'desc')->paginate(15);
+        return view('Pages.User.Interview.Interview', compact('page', 'data'));
+    }
+
+    public function addinterview()
+    {
+        $page = 'interview';
+        $employees = Employee::where('status', '1')->where('role', 'employee')->get();
+        $candidates = Employee::where('status', '1')->where('role', 'candidate')->get();
+        return view('Pages.User.Interview.AddInterview', compact('page', 'employees', 'candidates'));
+    }
+
+    public function viewinterview($id)
+    {
+        $page = 'interview';
+        $employees = Employee::where('status', '1')->where('role', 'employee')->get();
+        $candidates = Employee::where('status', '1')->where('role', 'candidate')->get();
+        $data = Interview::where('id', $id)->first();
+        return view('Pages.User.Interview.ViewInterview', compact('page', 'employees', 'candidates', 'data'));
+    }
+
+    public function interviewedit($id)
+    {
+        $page = 'interview';
+        $employees = Employee::where('status', '1')->where('role', 'employee')->get();
+        $candidates = Employee::where('status', '1')->where('role', 'candidate')->get();
+        $data = Interview::where('id', $id)->first();
+        return view('Pages.User.Interview.EditInterview', compact('page', 'employees', 'candidates', 'data'));
+    }
+
+    public function submitinterview(Request $request)
+    {
+        // Validate Interview Fields
+        $request->validate(
+            [
+                'employee' => 'required',
+                'candidate' => 'required',
+                'company' => 'required',
+                'role' => 'required',
+                'remail' => 'required',
+                'rphone' => 'required',
+            ],
+            [
+                'employee.required' => 'Select An Employee',
+                'candidate.required' => 'Select A Candidate',
+                'company.required' => 'Company Field Required',
+                'role.required' => 'Role Field Required',
+                'remail.required' => 'Recruiter Email Required',
+                'rphone.required' => 'Recruiter Phone Required'
+            ]
+        );
+
+        Interview::insert([
+            'employee_id' => $request->employee,
+            'name' => $request->candidate,
+            'company' => $request->company,
+            'role' => $request->role,
+            'remail' => $request->remail,
+            'rphone' => $request->rphone,
+            'status' => $request->status,
+            'comment' => $request->comment,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('user.interview')->with('message', 'Interview Inserted Successfully');
+    }
+
+    public function updateinterview(Request $request)
+    {
+        // Validate Interview Fields
+        $request->validate(
+            [
+                'employee' => 'required',
+                'candidate' => 'required',
+                'company' => 'required',
+                'role' => 'required',
+                'remail' => 'required',
+                'rphone' => 'required',
+            ],
+            [
+                'employee.required' => 'Select An Employee',
+                'candidate.required' => 'Select A Candidate',
+                'company.required' => 'Company Field Required',
+                'role.required' => 'Role Field Required',
+                'remail.required' => 'Recruiter Email Required',
+                'rphone.required' => 'Recruiter Phone Required'
+            ]
+        );
+
+        Interview::findOrFail($request->id)->update([
+            'employee_id' => $request->employee,
+            'name' => $request->candidate,
+            'company' => $request->company,
+            'role' => $request->role,
+            'remail' => $request->remail,
+            'rphone' => $request->rphone,
+            'status' => $request->status,
+            'comment' => $request->comment,
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('user.interview')->with('message', 'Interview Updated Successfully');
+    }
+
+    public function deletinterview($id)
+    {
+        Interview::findOrFail($id)->delete();
+        return response('Interview deleted successfully');
+    }
+
+    // *******************************
+
+    // Candidate Interview Codes
+
+    // *******************************
+
     public function candidate_interview()
     {
         $page = 'candidate_interview';

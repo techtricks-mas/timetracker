@@ -39,9 +39,6 @@
                                 Time</th>
                             <th
                                 class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                URL</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Status</th>
                             <th
                                 class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
@@ -74,11 +71,6 @@
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                 <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
                                     {{ $item->time }}</p>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <a href="{{ $item->url }}" class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ $item->url }}</a>
                             </td>
                             <td
                                 class="p-2 text-sm leading-normal align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">

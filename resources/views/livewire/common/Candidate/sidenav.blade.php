@@ -5,7 +5,8 @@
         <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
             sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
-            href="{{ route('candidate.dailywork') }}" target="_blank">
+            {{-- href="{{ route('candidate.dailywork') }}"  --}}
+            target="_blank">
             <img src="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2021/12/logo-removebg.png"
                 class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
         </a>
@@ -16,7 +17,7 @@
 
     <div class="items-center block w-auto min-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
-            <li class="mt-0.5 w-full">
+            {{-- <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'dailywork') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                     href="{{ route('candidate.dailywork') }}">
                     <div
@@ -25,7 +26,7 @@
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Daily Work Update</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'weeklyupdate') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"

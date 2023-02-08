@@ -21,6 +21,9 @@
                     <option {{ $date->date == $currentdate ? 'selected' : '' }} value="{{ str_replace('-', '', $date->date) }}">{{ $date->date }}</option>
                 @endforeach
             </select>
+            <a href="{{ route('admin.weeklyupdate') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
+                Add Employee
+            </a>
         </div>
         <div>
             <div class="flex-auto px-0 pt-0 pb-2">

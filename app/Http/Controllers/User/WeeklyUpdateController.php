@@ -33,4 +33,27 @@ class WeeklyUpdateController extends Controller
         $dates = WeeklyUpdate::select('date')->distinct()->orderBy('date', 'desc')->get();
         return view('Pages.User.WeeklyUpdate.WeeklyUpdate', compact('page', 'data', 'dates', 'currentdate'));
     }
+
+    public function addweeklyupdate() {
+        $page = 'weeklyupdate';
+        return view('Pages.User.WeeklyUpdate.addWeeklyUpdate', compact('page'));
+    }
+    public function postweeklyupdate(Request $request) {
+        $request->validate([
+            'done' => 'required|string',
+            'priorities' => 'required|string',
+            'concerns' => 'required|string',
+            'summary' => 'required|string'
+        ]);
+        WeeklyUpdate::insert([
+            'employee_id' => $request->id,
+            'done' => $request->done,
+            'priorities' => $request->priorities,
+            'concerns' => $request->concerns,
+            'summary' => $request->summary,
+            'date' => Carbon::now(),
+            'created_at' => Carbon::now()
+        ]);
+        return redirect()->route('user.weeklyupdate')->with('message', 'Weekly Update Added Successfully');
+    }
 }

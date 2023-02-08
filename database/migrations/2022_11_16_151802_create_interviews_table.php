@@ -18,15 +18,11 @@ return new class extends Migration
             $table->foreignId('employee_id');
             $table->string('name');
             $table->string('company');
-            $table->string('interviewer');
             $table->string('role');
-            $table->dateTime('time');
-            $table->string('job');
-            $table->string('url');
+            $table->string('remail');
+            $table->string('rphone');
             $table->string('status')->default('scheduled');
-            $table->string('reply')->nullable();
-            $table->string('reason')->nullable();
-            $table->string('comment')->nullable();
+            $table->longText('comment')->nullable();
             $table->timestamps();
         });
     }

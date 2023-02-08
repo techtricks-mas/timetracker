@@ -39,7 +39,7 @@
                 </li>
             @endif
 
-            <li class="mt-0.5 w-full">
+            {{-- <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'dailywork') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                     href="{{ route('admin.dailywork') }}">
                     <div
@@ -48,7 +48,7 @@
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Daily Work Update</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'weeklyupdate') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"

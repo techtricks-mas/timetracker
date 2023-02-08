@@ -5,7 +5,7 @@
         <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
             sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
-            href="{{ route('user.dailywork') }}" target="_blank">
+            href="{{ route('user.dashboard') }}" target="_blank">
             <img src="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2021/12/logo-removebg.png"
                 class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
         </a>
@@ -17,6 +17,16 @@
     <div class="items-center block w-auto min-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
             <li class="mt-0.5 w-full">
+                <a href="{{ route('user.dashboard') }}"
+                    class="py-2.7 @if ($page == 'dashboard') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors">
+                    <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
+                </a>
+            </li>
+            {{-- <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'dailywork') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                     href="{{ route('user.dailywork') }}">
                     <div
@@ -25,7 +35,7 @@
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Daily Work Update</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'weeklyupdate') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -37,6 +47,18 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Weekly Updates</span>
                 </a>
             </li>
+
+            <li class="mt-0.5 w-full">
+                <a class=" @if ($page == 'interview') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('user.interview') }}">
+                    <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Company Interview</span>
+                </a>
+            </li>
+
             <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'candidate_interview') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                     href="{{ route('user.candidate_interview') }}">

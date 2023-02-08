@@ -36,16 +36,13 @@
                                 Company</th>
                             <th
                                 class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Interviewer Name</th>
+                                Recruiter Email</th>
                             <th
                                 class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Role</th>
                             <th
                                 class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                 Status</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Time</th>
                             <th
                                 class="px-6 dark:text-white py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
                             </th>
@@ -76,7 +73,7 @@
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                 <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ $item->interviewer }}</p>
+                                    {{ $item->remail }}</p>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
@@ -89,11 +86,6 @@
                                     class="bg-gradient-to-tl capitalize @if ($item->status == 'done') from-emerald-500 to-teal-400 @elseif($item->status == 'selected') from-emerald-500 to-teal-400 @elseif($item->status == 'scheduled') from-yellow-500 to-yellow-400  @elseif($item->status == 'rejected') from-rose-500 to-red-400 @else from-yellow-500 to-yellow-400 @endif px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
                                     {{ $item->status == 'assessment' ? 'Recieved Assessment' : $item->status }}
                                 </span>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <span
-                                    class="text-xs font-semibold leading-tight  dark:text-white  text-slate-400">{{ $item->time }}</span>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent flex justify-evenly">
