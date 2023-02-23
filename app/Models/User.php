@@ -64,6 +64,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Employee::class);
     }
+    public function holiday()
+    {
+        return $this->belongsTo(Holiday::class);
+    }
 
     public function information()
     {

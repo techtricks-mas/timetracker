@@ -15,15 +15,17 @@
     <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
         <div class="flex justify-between">
             <h3 class="text-black font-sans font-medium text-xl dark:text-white"> Weekly Update List</h3>
-            <select class="py-2 rounded" onchange="dateHandler(this)">
-                <option value="0">Select Date</option>
-                @foreach ($dates as $date)
-                    <option {{ $date->date == $currentdate ? 'selected' : '' }} value="{{ str_replace('-', '', $date->date) }}">{{ $date->date }}</option>
-                @endforeach
-            </select>
-            <a href="{{ route('admin.weeklyupdate') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
-                Add Employee
-            </a>
+            <div>
+                <select class="py-2 rounded" onchange="dateHandler(this)">
+                    <option value="0">Select Date</option>
+                    @foreach ($dates as $date)
+                        <option {{ $date->date == $currentdate ? 'selected' : '' }} value="{{ str_replace('-', '', $date->date) }}">{{ $date->date }}</option>
+                    @endforeach
+                </select>
+                <a href="{{ route('admin.weeklyupdate') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
+                    Add Employee
+                </a>
+            </div>
         </div>
         <div>
             <div class="flex-auto px-0 pt-0 pb-2">

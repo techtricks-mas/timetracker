@@ -22,6 +22,8 @@
             Manage Company Interview
         @elseif ($page == 'candidate_interview')
             Manage Candidate Interview
+        @elseif ($page == 'holidays')
+            Holidays
         @elseif ($page == 'login')
             Login
         @elseif ($page == 'profile')

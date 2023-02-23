@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminHolidaysController;
 use App\Http\Controllers\Admin\DailyworkController as AdminDailyworkController;
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\InterviewController as AdminInterviewController;
@@ -64,6 +65,10 @@ Route::name('admin.')->middleware(['auth', 'verified', 'role:admin,null,null'])-
     Route::get('/weeklyupdate', [AdminWeeklyUpdateController::class, 'weeklyupdate'])->name('weeklyupdate');
     Route::get('/weekUpdate/{id}', [AdminWeeklyUpdateController::class, 'weekUpdateView'])->name('weekUpdateView');
     Route::get('/weeklyupdate/{date}', [AdminWeeklyUpdateController::class, 'WeekDatadate'])->name('WeekDatadate');
+
+    // Timesheet Routes
+    Route::get('/holidays', [AdminHolidaysController::class, 'holidays'])->name('timesheet');
+    Route::post('/addholiday', [AdminHolidaysController::class, 'addholiday'])->name('addholiday');
 
     // Interview Routes
     Route::get('/interview', [AdminInterviewController::class, 'interview'])->name('interview');
