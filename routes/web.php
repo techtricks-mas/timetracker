@@ -11,6 +11,7 @@ use App\Http\Controllers\Candidate\WeeklyUpdateController as CandidateWeeklyUpda
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\User\DailyworkController as UserDailyworkController;
 use App\Http\Controllers\User\InterviewController as UserInterviewController;
+use App\Http\Controllers\User\UserHolidaysController;
 use App\Http\Controllers\User\WeeklyUpdateController as UserWeeklyUpdateController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,9 @@ Route::name('admin.')->middleware(['auth', 'verified', 'role:admin,null,null'])-
     // Timesheet Routes
     Route::get('/holidays', [AdminHolidaysController::class, 'holidays'])->name('timesheet');
     Route::post('/addholiday', [AdminHolidaysController::class, 'addholiday'])->name('addholiday');
+    Route::post('/updateHoliday', [AdminHolidaysController::class, 'updateHoliday'])->name('updateHoliday');
+    Route::get('/getHoliday', [AdminHolidaysController::class, 'getHoliday'])->name('getHoliday');
+    Route::post('/deleteholiday', [AdminHolidaysController::class, 'deleteholiday'])->name('deleteholiday');
 
     // Interview Routes
     Route::get('/interview', [AdminInterviewController::class, 'interview'])->name('interview');
@@ -101,6 +105,13 @@ Route::name('user.')->middleware(['auth', 'verified', 'role:null,employee,null']
     Route::post('/postweeklyupdate', [UserWeeklyUpdateController::class, 'postweeklyupdate'])->name('postweeklyupdate');
     Route::get('/weekUpdate/{id}', [UserWeeklyUpdateController::class, 'weekUpdateView'])->name('weekUpdateView');
     Route::get('/weeklyupdate/{date}', [UserWeeklyUpdateController::class, 'WeekDatadate'])->name('WeekDatadate');
+
+    // Timesheet Routes
+    Route::get('/holidays', [UserHolidaysController::class, 'holidays'])->name('timesheet');
+    Route::post('/addholiday', [UserHolidaysController::class, 'addholiday'])->name('addholiday');
+    Route::post('/updateholiday', [UserHolidaysController::class, 'updateholiday'])->name('updateholiday');
+    Route::get('/getHoliday', [UserHolidaysController::class, 'getHoliday'])->name('getHoliday');
+    Route::post('/deleteholiday', [UserHolidaysController::class, 'deleteholiday'])->name('deleteholiday');
 
     // Interview Routes
     Route::get('/interview', [UserInterviewController::class, 'interview'])->name('interview');

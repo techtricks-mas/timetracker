@@ -19,7 +19,6 @@
     </div>
     <div class="relative z-990" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modal" style="display: none">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-black dark:bg-opacity-50 transition-opacity"></div>
-
         <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
@@ -28,13 +27,6 @@
                     <p class="text-black font-bold text-5">Add Holiday</p>
                 </div>
                 <div class="text-left mt-5">
-                    <p>Select Employee</p>
-                    <select class="w-full rounded" name="employee" id="employee">
-                        <option value="">Select Employee</option>
-                        @foreach ($employess as $employee)
-                            <option value="{{ $employee->user_id }}">{{ $employee->fname }} {{ $employee->lname }}</option>
-                        @endforeach
-                    </select>
                     <p class="mt-3">Date Start</p>
                     <input type="datetime-local" name="dateStart" id="dateStart" class="w-full rounded"/>
                     <p class="danger bg-red-500 py-1 px-2 rounded-2 text-white my-2" id="dateStartError" style="display: none"></p>
@@ -54,42 +46,34 @@
           </div>
         </div>
     </div>
-    <div class="relative z-990" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modal_Edit" style="display: none">
+    <div class="relative z-990" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modalEdit" style="display: none">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-black dark:bg-opacity-50 transition-opacity"></div>
-
         <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="text-center border-b">
-                    <p class="text-black font-bold text-5">Add Holiday</p>
+                    <p class="text-black font-bold text-5">Edit Holiday</p>
                 </div>
                 <div class="text-left mt-5">
-                    <p>Select Employee</p>
-                    <select class="w-full rounded" name="employee" id="employeeEdit">
-                        <option value="">Select Employee</option>
-                        @foreach ($employess as $employee)
-                            <option value="{{ $employee->user_id }}">{{ $employee->fname }} {{ $employee->lname }}</option>
-                        @endforeach
-                    </select>
                     <p class="mt-3">Date Start</p>
                     <input type="datetime-local" name="dateStart" id="dateStartEdit" class="w-full rounded"/>
                     <p class="danger bg-red-500 py-1 px-2 rounded-2 text-white my-2" id="dateStartEditError" style="display: none"></p>
                     <p class="mt-3">Date End</p>
                     <input type="datetime-local" name="dateEnd" id="dateEndEdit" class="w-full rounded"/>
                     <p class="danger bg-red-500 py-1 px-2 rounded-2 text-white my-2" id="dateEndEditError" style="display: none"></p>
-                    <input hidden readonly id="EditId"/>
                     <p class="mt-3">Event</p>
+                    <input hidden readonly id="EditId"/>
                     <input type="text" name="event" id="eventEdit" class="w-full rounded"/>
                     <p class="danger bg-red-500 py-1 px-2 rounded-2 text-white my-2" id="eventEditError" style="display: none"></p>
                 </div>
               </div>
               <div class="flex items-center justify-between bg-gray-50">
-                <button type="button" class=" float-left inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onclick="deleteHandler()">Delete</button>
-                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onclick="updateHandler()">Update</button>
+                  <button type="button" class=" float-left inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onclick="deleteHandler()">Delete</button>
+                  <div class=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onclick="updateHandler()">Submit</button>
                     <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="modalEditHandler()">Cancel</button>
-                </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -123,9 +107,7 @@
         let modalEdit = false;
         const modalEditHandler = (id) => {
             modalEdit = !modalEdit;
-            const modalElement = document.getElementById('modal_Edit');
-            let select = document.getElementById('employeeEdit');
-            select.value = id;
+            const modalElement = document.getElementById('modalEdit');
             if (modalEdit) {
                 modalElement.style.display = 'block'
             }
@@ -134,8 +116,8 @@
             }
         }
         const calanderHandler = (eventsArray) => {
-            var calendarEl = document.getElementById('calendar');
-            const   calendar = new FullCalendar.Calendar(calendarEl, {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, {
             eventDidMount: function(info) {
                 tippy(info.el, {
                     theme: 'CUSTOM',
@@ -143,11 +125,13 @@
                 });
             },
             eventClick: function(info) {
-                document.getElementById('dateStartEdit').value = datetimeLocal(info.event.start);
-                document.getElementById('dateEndEdit').value = datetimeLocal(info.event.end);
-                document.getElementById('eventEdit').value = info.event.title;
-                document.getElementById('EditId').value = info.event.extendedProps.editId;
-                modalEditHandler(info.event.extendedProps.userId)
+                if (info.event.extendedProps.userId == {{ Auth::user()->id }}) {
+                    document.getElementById('dateStartEdit').value = datetimeLocal(info.event.start);
+                    document.getElementById('dateEndEdit').value = datetimeLocal(info.event.end);
+                    document.getElementById('eventEdit').value = info.event.title;
+                    document.getElementById('EditId').value = info.event.extendedProps.editId;
+                    modalEditHandler(info.event.extendedProps.userId)
+                }
             },
             events: eventsArray,
             customButtons: {
@@ -166,10 +150,12 @@
           });
 
           calendar.render();
-        }
+
+        };
+
         $.ajax({
             type: "Get",
-            url: "{{ route('admin.getHoliday') }}",
+            url: "{{ route('user.getHoliday') }}",
             data: "data",
             success: function (response) {
                 calanderHandler(response);
@@ -189,19 +175,17 @@
         @endif
 
         const submitHandler = () => {
-            let employee = document.getElementById('employee').value;
             let dateStart = document.getElementById('dateStart').value;
             let dateEnd = document.getElementById('dateEnd').value;
             let event = document.getElementById('event').value;
-            const token = document.querySelector("[name='csrf-token']").getAttribute('content');
-            const dateStartError = document.getElementById('dateStartError');
-            const dateEndError = document.getElementById('dateEndError');
-            const eventError = document.getElementById('eventError');
+            let token = document.querySelector("[name='csrf-token']").getAttribute('content');
+            let dateStartError = document.getElementById('dateStartError');
+            let dateEndError = document.getElementById('dateEndError');
+            let eventError = document.getElementById('eventError');
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.addholiday') }}",
+                url: "{{ route('user.addholiday') }}",
                 data: {
-                    employee: employee,
                     datestart: dateStart,
                     dateend: dateEnd,
                     event: event,
@@ -211,12 +195,11 @@
                     dateStartError.style.display = 'none';
                     dateEndError.style.display = 'none';
                     eventError.style.display = 'none';
-                    employee = ''
                     dateStart = ''
                     dateEnd = ''
                     event = ''
                     modalHandler()
-                    calanderHandler(response)
+                    calanderHandler(response);
                 },
                 error: function (error) {
 
@@ -244,36 +227,34 @@
 
         const updateHandler = () => {
             let edit = document.getElementById('EditId').value;
-            let employee = document.getElementById('employeeEdit').value;
             let dateStart = document.getElementById('dateStartEdit').value;
             let dateEnd = document.getElementById('dateEndEdit').value;
             let event = document.getElementById('eventEdit').value;
-            const token = document.querySelector("[name='csrf-token']").getAttribute('content');
-            const dateStartError = document.getElementById('dateStartEditError');
-            const dateEndError = document.getElementById('dateEndEditError');
-            const eventError = document.getElementById('eventEditError');
+            let token = document.querySelector("[name='csrf-token']").getAttribute('content');
+            let dateStartError = document.getElementById('dateStartEditError');
+            let dateEndError = document.getElementById('dateEndEditError');
+            let eventError = document.getElementById('eventEditError');
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.updateHoliday') }}",
+                url: "{{ route('user.updateholiday') }}",
                 data: {
                     edit: edit,
-                    employee: employee,
                     datestart: dateStart,
                     dateend: dateEnd,
                     event: event,
                     _token: token
                 },
                 success: function (response) {
+                    console.log(response);
                     dateStartError.style.display = 'none';
                     dateEndError.style.display = 'none';
                     eventError.style.display = 'none';
                     edit = ''
-                    employee = ''
                     dateStart = ''
                     dateEnd = ''
                     event = ''
                     modalEditHandler()
-                    calanderHandler(response)
+                    calanderHandler(response);
                 },
                 error: function (error) {
 
@@ -303,7 +284,7 @@
             let token = document.querySelector("[name='csrf-token']").getAttribute('content');
             $.ajax({
                 type: "post",
-                url: "{{ route('admin.deleteholiday') }}",
+                url: "{{ route('user.deleteholiday') }}",
                 data: {
                     edit: edit,
                     _token: token
@@ -311,8 +292,8 @@
                 success: function (response) {
                     edit = ''
                     modalEditHandler();
-                    calanderHandler(response);
                     $.toaster('Event Delete Successfully', '', 'danger bg-green-500 py-3 px-2 rounded-2 text-white');
+                    calanderHandler(response);
                 },
                 error: function (error) {
                     console.log(error);

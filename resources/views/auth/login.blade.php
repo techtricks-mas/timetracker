@@ -11,7 +11,7 @@
                             <div class="p-6 pb-0 mb-0">
                                 <div class="text-center">
                                     <img class="mb-6 w-full mx-auto "
-                                        src="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2021/12/logo-removebg.png" />
+                                    src="{{ url('/') }}/img/logo.png" />
                                 </div>
                                 <h4 class="font-bold">Welcome to TechSpotDev</h4>
                                 <p class="mb-0">Enter your email and password to sign in</p>

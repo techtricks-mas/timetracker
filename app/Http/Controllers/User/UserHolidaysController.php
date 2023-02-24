@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
@@ -10,24 +10,31 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminHolidaysController extends Controller
+class UserHolidaysController extends Controller
 {
     public function holidays() {
         $page = 'holidays';
-        $employess = Employee::all();
-        return view('Pages.Admin.Holidays.holidays', compact('page', 'employess'));
+        $holidays = Holiday::all();
+        $data = [];
+        foreach ($holidays as $key => $holiday) {
+            $data[] = [
+                'name' => $holiday->user->name,
+                'start' => $holiday->datestart,
+                'end' => $holiday->dateend,
+                'title' => $holiday->event,
+            ];
+        }
+        return view('Pages.User.Holidays.holidays', compact('page', 'data'));
     }
 
     public function addholiday(Request $request) {
         $request->validate([
-            'employee' => 'required',
             'datestart' => 'required',
             'dateend' => 'required',
             'event' => 'required'
         ]);
-        $user = User::where('id', $request->employee)->first();
         Holiday::insert([
-            'user_id' => $request->employee,
+            'user_id' => Auth::user()->id,
             'datestart' => $request->datestart,
             'dateend' => $request->dateend,
             'event' => $request->event,
@@ -43,21 +50,19 @@ class AdminHolidaysController extends Controller
                 'start' => $holiday->datestart,
                 'end' => $holiday->dateend,
                 'title' => $holiday->event,
-                'backgroundColor' => '#464646'
+                'backgroundColor' => $holiday->user_id == Auth::user()->id ? '#007eff' :'#464646'
             ];
         }
         return response()->json($data);
     }
 
-    public function updateHoliday(Request $request) {
+    public function updateholiday(Request $request) {
         $request->validate([
-            'employee' => 'required',
             'datestart' => 'required',
             'dateend' => 'required',
             'event' => 'required'
         ]);
         Holiday::where('id', $request->edit)->update([
-            'user_id' => $request->employee,
             'datestart' => $request->datestart,
             'dateend' => $request->dateend,
             'event' => $request->event,
@@ -73,7 +78,7 @@ class AdminHolidaysController extends Controller
                 'start' => $holiday->datestart,
                 'end' => $holiday->dateend,
                 'title' => $holiday->event,
-                'backgroundColor' => '#464646'
+                'backgroundColor' => $holiday->user_id == Auth::user()->id ? '#007eff' :'#464646'
             ];
         }
         return response()->json($data);
@@ -90,11 +95,12 @@ class AdminHolidaysController extends Controller
                 'start' => $holiday->datestart,
                 'end' => $holiday->dateend,
                 'title' => $holiday->event,
-                'backgroundColor' => '#464646'
+                'backgroundColor' => $holiday->user_id == Auth::user()->id ? '#007eff' :'#464646'
             ];
         }
         return response()->json($data);
     }
+
     public function deleteholiday(Request $request) {
         Holiday::where('id', $request->edit)->delete();
         $holidays = Holiday::all();
@@ -107,7 +113,7 @@ class AdminHolidaysController extends Controller
                 'start' => $holiday->datestart,
                 'end' => $holiday->dateend,
                 'title' => $holiday->event,
-                'backgroundColor' => '#464646'
+                'backgroundColor' => $holiday->user_id == Auth::user()->id ? '#007eff' :'#464646'
             ];
         }
         return response()->json($data);

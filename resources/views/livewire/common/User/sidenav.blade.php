@@ -6,7 +6,7 @@
             sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
             href="{{ route('user.dashboard') }}" target="_blank">
-            <img src="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2021/12/logo-removebg.png"
+            <img src="{{ url('/') }}/img/logo.png"
                 class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
         </a>
     </div>
@@ -67,6 +67,16 @@
                         <i class="relative top-0 text-sm leading-normal text-violet-500 ni ni-badge"></i>
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Candidate Interview</span>
+                </a>
+            </li>
+            <li class="mt-0.5 w-full">
+                <a class=" @if ($page == 'timesheet') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('user.timesheet') }}">
+                    <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-compass-04"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Holidays</span>
                 </a>
             </li>
 

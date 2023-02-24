@@ -6,7 +6,7 @@
             sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
             href="{{ route('admin.dashboard') }}">
-            <img src="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2021/12/logo-removebg.png"
+            <img src="{{ url('/') }}/img/logo.png"
                 class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
         </a>
     </div>
