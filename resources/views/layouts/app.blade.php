@@ -26,6 +26,10 @@
             Holidays
         @elseif ($page == 'login')
             Login
+        @elseif ($page == 'database')
+            Database
+        @elseif ($page == 'server')
+            Server
         @elseif ($page == 'profile')
             Profile
         @endif

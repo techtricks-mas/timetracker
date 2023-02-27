@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DailyworkController as AdminDailyworkController;
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\InterviewController as AdminInterviewController;
 use App\Http\Controllers\Admin\WeeklyUpdateController as AdminWeeklyUpdateController;
+use App\Http\Controllers\AdminServerController;
 use App\Http\Controllers\Candidate\DailyworkController as CandidateDailyworkController;
 use App\Http\Controllers\Candidate\InterviewController as CandidateInterviewController;
 use App\Http\Controllers\Candidate\WeeklyUpdateController as CandidateWeeklyUpdateController;
@@ -91,6 +92,16 @@ Route::name('admin.')->middleware(['auth', 'verified', 'role:admin,null,null'])-
     Route::post('/submitcandidatetinterview', [AdminInterviewController::class, 'submicandidatetinterview'])->name('submicandidatetinterview');
     Route::post('/updatecandidatetinterview', [AdminInterviewController::class, 'updatecandidatetinterview'])->name('updatecandidatetinterview');
     Route::get('/delete-candidate-interview/{id}', [AdminInterviewController::class, 'deletecandidateinterview'])->name('deletecandidateinterview');
+
+    // Database Settings
+    Route::get('/database', [AdminServerController::class, 'database'])->name('database');
+    Route::get('/addDatabase', [AdminServerController::class, 'addDatabase'])->name('addDatabase');
+    Route::get('/importDatabase/{id}', [AdminServerController::class, 'importDatabase'])->name('importDatabase');
+    Route::get('/deletDatabase/{id}', [AdminServerController::class, 'deletDatabase'])->name('deletDatabase');
+
+    // Server Settings
+    Route::get('/server', [AdminServerController::class, 'server'])->name('server');
+    Route::post('/mail', [AdminServerController::class, 'mail'])->name('mail');
 });
 Route::name('user.')->middleware(['auth', 'verified', 'role:null,employee,null'])->prefix('user')->group(function () {
     Route::get('/dashboard', [CommonController::class, 'dashboard'])->name('dashboard');
