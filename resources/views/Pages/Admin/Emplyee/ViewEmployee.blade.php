@@ -6,15 +6,15 @@
     <link href="{{ url('/') }}/assets/css/jquery.timepicker.min.css" rel="stylesheet" />
 @endsection
 @section('title')
-    Employee
+    User
 @endsection
 @section('subTitle')
-    Employee
+    User
 @endsection
 @section('content')
     <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
         <div class="flex justify-between">
-            <h6 class="text-slate-700 text-xl dark:text-white">View Employee</h6>
+            <h6 class="text-slate-700 text-xl dark:text-white">View User</h6>
         </div>
         <div>
             <form>
@@ -106,6 +106,14 @@
                     </div>
 
                 </div>
+                @if ($employee->role == 'candidate')
+                <div id="profile-input" class="py-3" style=""; >
+                    <label class="block text-sm" for="profile-name">Profile Name: <span class="text-red-500">*</span></label>
+                    <input type="text" readonly name="profileInput" type="profileInput" value="{{ $employee->profileName }}"
+                        class="dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                    >
+                </div>
+                @endif
                 <div class="py-3">
                     <div class="md:flex">
                         <div class="w-full md:w-1/2 md:mr-2">

@@ -8,16 +8,27 @@ use App\Models\Employee;
 use App\Models\Interview;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InterviewController extends Controller
 {
     public function interview()
     {
+        $id = Auth::user()->id;
         $page = 'interview';
-        $data = Interview::orderBy('id', 'desc')->paginate(15);
-        return view('Pages.Candidate.Interview.Interview', compact('page', 'data'));
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $data = Interview::where('employee_id',$id)->orderBy('id', 'desc')->paginate(15);
+        return view('Pages.Candidate.Interview.Interview', compact('page', 'data', 'currentdate'));
     }
-
+    public function WeekDatadate($date)
+    {
+        $id = Auth::user()->id;
+        $page = 'interview';
+        $currentdate = Carbon::parse($date)->format('Y-m-d');
+        $data = Interview::where('employee_id',$id)->whereDate('created_at', $currentdate)->paginate(15);
+        $dates = Interview::select('created_at')->distinct()->orderBy('created_at', 'desc')->get();
+        return view('Pages.Candidate.Interview.Interview', compact('page', 'data', 'dates', 'currentdate'));
+    }
     public function addinterview()
     {
         $page = 'interview';
@@ -49,26 +60,28 @@ class InterviewController extends Controller
         // Validate Interview Fields
         $request->validate(
             [
-                'employee' => 'required',
-                'candidate' => 'required',
+                // 'employee' => 'required',
+                // 'candidate' => 'required',
                 'company' => 'required',
                 'role' => 'required',
                 'remail' => 'required',
                 'rphone' => 'required',
             ],
             [
-                'employee.required' => 'Select An Employee',
-                'candidate.required' => 'Select A Candidate',
+                // 'employee.required' => 'Select An Employee',
+                // 'candidate.required' => 'Select A Candidate',
                 'company.required' => 'Company Field Required',
                 'role.required' => 'Role Field Required',
                 'remail.required' => 'Recruiter Email Required',
                 'rphone.required' => 'Recruiter Phone Required'
             ]
         );
-
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
         Interview::insert([
-            'employee_id' => $request->employee,
-            'name' => $request->candidate,
+            // 'employee_id' => $request->employee,
+            'employee_id' => Auth::user()->id,
+            // 'name' => $request->candidate,
+            'name' => $employee->profileName,
             'company' => $request->company,
             'role' => $request->role,
             'remail' => $request->remail,
@@ -86,26 +99,28 @@ class InterviewController extends Controller
         // Validate Interview Fields
         $request->validate(
             [
-                'employee' => 'required',
-                'candidate' => 'required',
+                // 'employee' => 'required',
+                // 'candidate' => 'required',
                 'company' => 'required',
                 'role' => 'required',
                 'remail' => 'required',
                 'rphone' => 'required',
             ],
             [
-                'employee.required' => 'Select An Employee',
-                'candidate.required' => 'Select A Candidate',
+                // 'employee.required' => 'Select An Employee',
+                // 'candidate.required' => 'Select A Candidate',
                 'company.required' => 'Company Field Required',
                 'role.required' => 'Role Field Required',
                 'remail.required' => 'Recruiter Email Required',
                 'rphone.required' => 'Recruiter Phone Required'
             ]
         );
-
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
         Interview::findOrFail($request->id)->update([
-            'employee_id' => $request->employee,
-            'name' => $request->candidate,
+            // 'employee_id' => $request->employee,
+            'employee_id' => Auth::user()->id,
+            // 'name' => $request->candidate,
+            'name' => $employee->profileName,
             'company' => $request->company,
             'role' => $request->role,
             'remail' => $request->remail,
@@ -132,9 +147,21 @@ class InterviewController extends Controller
 
     public function candidate_interview()
     {
+        $id = Auth::user()->id;
         $page = 'candidate_interview';
-        $data = Cinterview::orderBy('id', 'desc')->paginate(15);
-        return view('Pages.Candidate.Cinterview.Interview', compact('page', 'data'));
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $data = Cinterview::where('user_id', $id)->orderBy('id', 'desc')->paginate(15);
+        return view('Pages.Candidate.Cinterview.Interview', compact('page', 'data', 'currentdate'));
+    }
+
+    public function CWeekDatadate($date)
+    {
+        $id = Auth::user()->id;
+        $page = 'candidate_interview';
+        $currentdate = Carbon::parse($date)->format('Y-m-d');
+        $data = Cinterview::where('user_id', $id)->whereDate('created_at', $currentdate)->paginate(15);
+        $dates = Cinterview::select('created_at')->distinct()->orderBy('created_at', 'desc')->get();
+        return view('Pages.Candidate.Cinterview.Interview', compact('page', 'data', 'dates', 'currentdate'));
     }
 
     public function addcandidateinterview()
@@ -166,7 +193,6 @@ class InterviewController extends Controller
                 'role' => 'required',
                 'time' => 'required',
                 'description' => 'required',
-                'url' => 'required',
             ],
             [
                 'name.required' => 'Candidate Name Required',
@@ -174,11 +200,11 @@ class InterviewController extends Controller
                 'role.required' => 'Role Field Required',
                 'time.required' => 'Interview Timing Required',
                 'description.required' => 'Job Description Required',
-                'url.required' => 'URL Field Required',
             ]
         );
 
         Cinterview::insert([
+            'user_id' => Auth::user()->id,
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
@@ -203,7 +229,6 @@ class InterviewController extends Controller
                 'role' => 'required',
                 'time' => 'required',
                 'description' => 'required',
-                'url' => 'required',
             ],
             [
                 'name.required' => 'Candidate Name Required',
@@ -211,7 +236,6 @@ class InterviewController extends Controller
                 'role.required' => 'Role Field Required',
                 'time.required' => 'Interview Timing Required',
                 'description.required' => 'Job Description Required',
-                'url.required' => 'URL Field Required',
             ]
         );
 

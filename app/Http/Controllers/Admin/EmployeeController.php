@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Country;
 use App\Models\Employee;
+use App\Models\Color;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Auth;
 class EmployeeController extends Controller
 {
+
     public function addemployee()
     {
         $page = 'employee';
@@ -21,11 +23,13 @@ class EmployeeController extends Controller
         return view('Pages.Admin.Emplyee.AddEmployee', compact('country', 'page'));
     }
 
-    public function employee()
+    public function employee(Request $request)
     {
         $page = 'employee';
-        $employees = Employee::paginate(15);
-        return view('Pages.Admin.Emplyee.Employee', compact('employees', 'page'));
+        $employees = Employee::all();
+        // dd($employees);
+        return view('Pages.Admin.Emplyee.Employee', compact('employees', 'page' ));
+
     }
 
     public function viewemployee($id)
@@ -91,6 +95,18 @@ class EmployeeController extends Controller
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
+        // check if role is admin then only super admin can add admin
+        if (Auth::user()->role == 'admin') {
+            if ($request->role == 'admin') {
+                return redirect()->route('admin.employee')->with('error', 'You are not allowed to add admin');
+            }
+            elseif ($request->role == 'superadmin') {
+                return redirect()->route('admin.employee')->with('error', 'You are not allowed to add superadmin');
+            }
+        }
+        $colors=Color::all();
+       // get random color
+        $color=$colors->random()->toArray()['id'];
         Employee::insert([
             'user_id' => $user->id,
             'fname' => $request->firstname,
@@ -108,15 +124,17 @@ class EmployeeController extends Controller
             'jdate' => $request->jdate,
             'designation' => $request->designation,
             'status' => $request->status,
+            'profileName' => $request->profileName ? $request->profileName : '',
+            'color_id' => $color,
             'created_at' => Carbon::now(),
         ]);
-        $testMailData = [
-            'name' => $request->firstname . ' ' . $request->lastname,
-            'email' => $request->workemail,
-            'password' => $request->password
-        ];
+        // $testMailData = [
+        //     'name' => $request->firstname . ' ' . $request->lastname,
+        //     'email' => $request->workemail,
+        //     'password' => $request->password
+        // ];
 
-        Mail::to($request->personalemail)->send(new SendMail($testMailData));
+        // Mail::to($request->personalemail)->send(new SendMail($testMailData));
         return redirect()->route('admin.employee')->with('message', 'Employee Inserted Successfully');
     }
 
@@ -180,6 +198,14 @@ class EmployeeController extends Controller
                 'status.required' => 'Status Required',
             ]
         );
+        if (Auth::user()->role == 'admin') {
+            if ($request->role == 'admin') {
+                return redirect()->route('admin.employee')->with('error', 'You are not allowed to add admin');
+            }
+            elseif ($request->role == 'superadmin') {
+                return redirect()->route('admin.employee')->with('error', 'You are not allowed to add superadmin');
+            }
+        }
         User::where('id', $employee_data->user_id)->update([
             'name' => $request->firstname . ' ' . $request->lastname,
             'role' => $request->role,
@@ -200,7 +226,9 @@ class EmployeeController extends Controller
             'whours' => $request->whours,
             'jdate' => $request->jdate,
             'designation' => $request->designation,
+            'profileName' => $request->profileName ? $request->profileName : '',
             'status' => $request->status,
+            'profileName' => $request->profileInput ? $request->profileInput : '',
             'updated_at' => Carbon::now(),
         ]);
         return redirect()->route('admin.employee')->with('message', 'Employee Updated Successfully');

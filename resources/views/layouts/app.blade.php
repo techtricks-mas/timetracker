@@ -5,15 +5,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png"
-        href="https://cdn-ggljj.nitrocdn.com/NqLCUTuufVSCAUtlxNknLoepQIqQMAzY/assets/static/optimized/rev-310a154/wp-content/uploads/2022/06/favicon-32x32-1.png">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     {{-- <title>{{ config('app.name', 'TechSpotDev TimeTracker') }}</title> --}}
     <title>{{ _('TechSpotDev - ') }}
         @if ($page == 'dashboard')
             Dashboard
         @elseif ($page == 'employee')
-            Manage Employee
+            Manage User
+        @elseif ($page == 'financial')
+            Financial Management
         @elseif ($page == 'dailywork')
             Daily Work Update
         @elseif ($page == 'weeklyupdate')
@@ -32,6 +33,8 @@
             Server
         @elseif ($page == 'profile')
             Profile
+        @elseif ($page == 'job')
+            Manage Job
         @endif
     </title>
     <!-- Fonts -->
@@ -44,6 +47,9 @@
     <link href="{{ url('/') }}/assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ url('/') }}/assets/css/nucleo-svg.css" rel="stylesheet" />
     <link href="{{ url('/') }}/assets/css/custom.css" rel="stylesheet" />
+    <!-- DataTables styles -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+
     {{-- CSS YIELD --}}
     @yield('CSS')
     <!-- Scripts -->
@@ -154,6 +160,7 @@
 <script src="{{ url('/') }}/assets/js/fixed-plugin.js" async></script>
 <script src="{{ url('/') }}/assets/js/navbar-sticky.js" async></script>
 <script src="{{ url('/') }}/assets/js/sidenav-burger.js" async></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 @yield('JS')
 
 </html>

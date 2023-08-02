@@ -54,7 +54,7 @@
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                 <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ strlen($item->employee_id) == 1 ? 'TSD00'.$item->employee_id : (strlen($item->employee_id) == 2 ? 'TSD0'.$item->employee_id : 'TSD'.$item->employee_id) }}</p>
+                                    {{ strlen($item->employee_id) == 1 ? 'TSC00'.$item->employee_id : (strlen($item->employee_id) == 2 ? 'TSC0'.$item->employee_id : 'TSC'.$item->employee_id) }}</p>
                             </td>
                             <td
                                 class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
@@ -92,7 +92,7 @@
                                 <a href="{{ route('user.viewinterview', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a href="{{ route('user.interviewedit', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                <a href="{{ route('user.interviewedit', $item->id) }}" class="py-2.5 px-3  mx-2 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a data-url="{{ route('user.deletinterview', $item->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">

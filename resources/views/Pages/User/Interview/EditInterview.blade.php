@@ -100,6 +100,7 @@
                             class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
                             name="status">
                             <option @if ($data->status == 'scheduled') selected @endif value="scheduled" selected>Scheduled</option>
+                            <option @if ($data->status == 'in progress') selected @endif value="in progress" selected>In Progress</option>
                             <option @if ($data->status == 'done') selected @endif value="done">Done</option>
                             <option @if ($data->status == 'selected') selected @endif value="selected">Selected</option>
                             <option @if ($data->status == 'rejected') selected @endif value="rejected">Rejected</option>

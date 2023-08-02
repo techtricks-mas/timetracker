@@ -26,7 +26,7 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
                 </a>
             </li>
-            @if (Auth::user()->role === 'admin')
+            @if (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
                 <li class="mt-0.5 w-full">
                     <a href="{{ route('admin.employee') }}"
                         class=" @if ($page == 'employee') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
@@ -34,7 +34,19 @@
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Manage Employee</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Manage User</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role === 'superadmin')
+                <li class="mt-0.5 w-full">
+                    <a href="{{ route('admin.financial') }}"
+                        class=" @if ($page == 'financial') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-red-500 ni ni-cart"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Financial Management</span>
                     </a>
                 </li>
             @endif
@@ -91,7 +103,16 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Holidays</span>
                 </a>
             </li>
-
+            <li class="mt-0.5 w-full">
+                <a class=" @if ($page == 'job') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('admin.job') }}">
+                    <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Job Management</span>
+                </a>
+            </li>
             <li class="w-full mt-4">
                 <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Setting pages
                 </h6>

@@ -99,6 +99,7 @@
                             class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
                             name="status">
                             <option value="scheduled" selected>Scheduled</option>
+                            <option value="in progress">In Progress</option>
                             <option value="done">Done</option>
                             <option value="selected">Selected</option>
                             <option value="rejected">Rejected</option>

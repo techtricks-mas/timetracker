@@ -17,25 +17,9 @@
             <h6 class="text-slate-700 text-xl">Edit Interview</h6>
         </div>
         <div>
-            <form method="POST" action="{{ url('/updateinterview') }}" name="form">
+            <form method="POST" action="{{ route('admin.updateinterview') }}" name="form">
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
-                        <label class="block  text-sm" for="firstName">Select Employee <span class="text-red-500">*</span></label>
-                        <select value="{{ $data->employee }}"
-                            class="@error('employee') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
-                            name="employee" required>
-                            @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}" @if ($data->employee == $employee->id) selected @endif>
-                                    {{ $employee->user->name }}
-                                    ({{ strlen($employee->id) == 1 ? 'TSD00' . $employee->id : (strlen($employee->id) == 2 ? 'TSD0' . $employee->id : 'TSD' . $employee->id) }})
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('employee')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="firstName">Select Candidate Name <span class="text-red-500">*</span></label>
                         <select value="{{ old('candidate') }}"
                             class="@error('candidate') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
@@ -50,15 +34,24 @@
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
-                <input value="{{ $data->id }}" name="id" hidden>
-                <div class="md:flex py-3">
-                    <div class="w-full md:w-1/2 md:mr-2">
+                    <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="company">Company name <span class="text-red-500">*</span></label>
                         <input id="company" type="text"  value="{{ $data->company }}"
                             class="@error('company') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
                             name="company" />
                         @error('company')
+                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <input value="{{ $data->id }}" name="id" hidden>
+                <div class="md:flex py-3">
+                    <div class="w-full md:w-1/2 md:mr-2">
+                        <label class="block  text-sm" for="remail">Recruiter Email <span class="text-red-500">*</span></label>
+                        <input id="remail" type="email" value="{{ $data->remail }}"
+                            class="@error('remail') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
+                            name="remail" />
+                        @error('remail')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
@@ -74,11 +67,18 @@
                 </div>
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
-                        <label class="block  text-sm" for="remail">Recruiter Email <span class="text-red-500">*</span></label>
-                        <input id="remail" type="email" value="{{ $data->remail }}"
-                            class="@error('remail') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 rounded-2 border border-black focus:outline-none w-full"
-                            name="remail" />
-                        @error('remail')
+                        <label class="block text-sm" for="status">Status <span class="text-red-500">*</span></label>
+                        <select
+                            class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                            name="status">
+                            <option @if ($data->status == 'scheduled') selected @endif value="scheduled" selected>Scheduled</option>
+                            <option @if ($data->status == 'in progress') selected @endif value="in progress" selected>In Progress</option>
+                            <option @if ($data->status == 'done') selected @endif value="done">Done</option>
+                            <option @if ($data->status == 'selected') selected @endif value="selected">Selected</option>
+                            <option @if ($data->status == 'rejected') selected @endif value="rejected">Rejected</option>
+                            <option @if ($data->status == 'assessment') selected @endif value="assessment">Recieved Assessment</option>
+                        </select>
+                        @error('status')
                             <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
@@ -95,19 +95,13 @@
                 @csrf
                 <div class="md:flex py-3">
                     <div class="w-full md:w-1/2 md:mr-2">
-                        <label class="block text-sm" for="status">Status <span class="text-red-500">*</span></label>
-                        <select
-                            class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
-                            name="status">
-                            <option @if ($data->status == 'scheduled') selected @endif value="scheduled" selected>Scheduled</option>
-                            <option @if ($data->status == 'done') selected @endif value="done">Done</option>
-                            <option @if ($data->status == 'selected') selected @endif value="selected">Selected</option>
-                            <option @if ($data->status == 'rejected') selected @endif value="rejected">Rejected</option>
-                            <option @if ($data->status == 'assessment') selected @endif value="assessment">Recieved Assessment</option>
-                        </select>
-                        @error('status')
-                            <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
+                      <label class="block text-sm" for="status">Date <span class="text-red-500">*</span></label>
+                      <input type="date" 
+                              name="date" 
+                              id="date" 
+                              class="@error('status') border-red-500 @enderror dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                              value="{{ $data->date }}"         
+                      />
                     </div>
                     <div class="w-full md:w-1/2 md:ml-2">
                         <label class="block  text-sm" for="comment">Additional Comments</label>

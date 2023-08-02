@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class, 'id', 'user_id');
     }
     public function holiday()
     {

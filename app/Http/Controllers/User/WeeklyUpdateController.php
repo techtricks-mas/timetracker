@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\WeeklyUpdate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WeeklyUpdateController extends Controller
 {
     public function weeklyupdate()
     {
+        $id = Auth::user()->id;
         $page = 'weeklyupdate';
         $currentdate = Carbon::now()->format('Y-m-d');
-        $data = WeeklyUpdate::orderBy('id', 'desc')->paginate(15);
+        $data = WeeklyUpdate::where('employee_id', $id)->orderBy('id', 'desc')->paginate(15);
         $dates = WeeklyUpdate::select('date')->distinct()->orderBy('date', 'desc')->get();
         return view('Pages.User.WeeklyUpdate.WeeklyUpdate', compact('page', 'data', 'dates', 'currentdate'));
     }

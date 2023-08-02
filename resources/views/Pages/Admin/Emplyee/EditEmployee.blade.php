@@ -6,15 +6,15 @@
 <link href="{{ url('/') }}/assets/css/jquery.timepicker.min.css" rel="stylesheet" />
 @endsection
 @section('title')
-    Employee
+    User
 @endsection
 @section('subTitle')
-Edit Employee
+Edit User
 @endsection
 @section('content')
 <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
     <div class="flex justify-between">
-        <h6 class="text-slate-700 text-xl dark:text-white">Edit Employee</h6>
+        <h6 class="text-slate-700 text-xl dark:text-white">Edit User</h6>
     </div>
     <div>
         <form method="POST" action="{{ route('admin.updateemployee') }}" name="form">
@@ -74,15 +74,18 @@ Edit Employee
                 </div>
 
             </div>
-            <div class="md:flex py-3">
-                <div class="w-full md:w-1/2 md:mr-2">
-                    <label class="block text-sm" for="country">Role <span class="text-red-500">*</span></label>
-                    <select class="px-3 py-2 w-full border-black focus:outline-none rounded-2 dark:bg-slate-850 dark:border-white dark:text-white" name="role">
-                        <option @if ($employee->role == 'admin') selected @endif value="admin">Admin</option>
-                        <option @if ($employee->role == 'employee') selected @endif value="employee">Employee</option>
-                        <option @if ($employee->role == 'candidate') selected @endif value="candidate">Interview Candidate</option>
-                    </select>
-                </div>
+            <div class="md:flex py-3" >
+                  <div class="w-full md:w-1/2 md:mr-2">
+                      <label class="block text-sm" for="country">Role <span class="text-red-500">*</span></label>
+                      <select id="role-input" class="px-3 py-2 w-full border-black focus:outline-none rounded-2 dark:bg-slate-850 dark:border-white dark:text-white" name="role">
+                            @if (Auth::user()->role == 'superadmin') 
+                                <option @if ($employee->role == 'superadmin') selected @endif value="superadmin">Super Admin</option>
+                                <option @if ($employee->role == 'admin') selected @endif value="admin">Admin</option>
+                            @endif
+                            <option @if ($employee->role == 'employee') selected @endif value="employee">Employee</option>
+                            <option @if ($employee->role == 'candidate') selected @endif value="candidate">Interview Candidate</option>
+                      </select>
+                  </div>
                 <div class="w-full md:w-1/2 md:ml-2">
                     <label class="block text-sm" for="country">Work Type <span class="text-red-500">*</span></label>
                     <select class="@error('type') border-red-500 @enderror px-3 py-2 w-full border-black focus:outline-none rounded-2 dark:bg-slate-850 dark:border-white dark:text-white" name="type">
@@ -94,8 +97,17 @@ Edit Employee
                         <p class="alert alert-danger text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
+              
 
             </div>
+            @if ($employee->role == 'candidate')
+            <div id="profile-input" class="py-3" style=""; >
+                <label class="block text-sm" for="profile-name">Profile Name: <span class="text-red-500">*</span></label>
+                <input type="text" name="profileInput" type="profileInput" value="{{ $employee->profileName }}"
+                    class="dark:bg-slate-850 dark:border-white dark:text-white px-3 py-2 w-full border-black focus:outline-none rounded-2"
+                >
+            </div>
+            @endif
             <div class="py-3">
                 <div class="md:flex">
                     <div class="w-full md:w-1/2 md:mr-2">
@@ -192,6 +204,7 @@ Edit Employee
                 password: "required",
                 cpassword: "required",
                 designation: "required",
+                profileName: "required",
                 jdate: "required",
                 status: "required",
             },
@@ -211,6 +224,7 @@ Edit Employee
                 password: "Password Required",
                 cpassword: "Confirm Password Required",
                 designation: "Designation Required",
+                profileName: "Profile Name Required",
                 jdate: "Joining Date Required",
                 status: "Status Required",
             },
@@ -223,6 +237,24 @@ Edit Employee
             },
             submitHandler: function(form) {
             form.submit();
+            }
+        });
+
+         // Script to allow profile-name feild to only be present if role-input value is 'Interview Candidate'
+         const roleInput = document.getElementById('role-input');
+        const profileInput = document.getElementById('profile-input');
+        const input = document.getElementById('profileInput');
+
+        // check if roleInput value is 'candidate' on page load
+        if (roleInput.value == 'candidate') {
+            profileInput.style.display = 'block';
+        }
+        roleInput.addEventListener('change', function () {
+            if (roleInput.value == 'candidate') {
+                profileInput.style.display = 'block';   
+            } else {
+                profileInput.style.display = 'none';
+                input.value = '';
             }
         });
     </script>

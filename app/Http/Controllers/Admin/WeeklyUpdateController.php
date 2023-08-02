@@ -9,13 +9,20 @@ use Illuminate\Http\Request;
 
 class WeeklyUpdateController extends Controller
 {
-    public function weeklyupdate()
+    public function weeklyupdate(Request $request)
     {
         $page = 'weeklyupdate';
-        $currentdate = Carbon::now()->format('Y-m-d');
-        $data = WeeklyUpdate::orderBy('id', 'desc')->paginate(15);
         $dates = WeeklyUpdate::select('date')->distinct()->orderBy('date', 'desc')->get();
-        return view('Pages.Admin.WeeklyUpdate.WeeklyUpdate', compact('page', 'data', 'dates', 'currentdate'));
+        if($request->has('dateSearch')) {
+            $currentdate = Carbon::parse($request->dateSearch)->format('Y-m-d');
+            $data = WeeklyUpdate::where('date', $currentdate)->get();
+            return view('Pages.Admin.WeeklyUpdate.WeeklyUpdate', compact('page', 'data', 'dates', 'currentdate'));
+        }
+         else {
+            $currentdate = Carbon::now()->format('Y-m-d');
+            $data = WeeklyUpdate::orderBy('id', 'desc')->get();
+            return view('Pages.Admin.WeeklyUpdate.WeeklyUpdate', compact('page', 'data', 'dates', 'currentdate'));
+        }
     }
 
     public function weekUpdateView($id)

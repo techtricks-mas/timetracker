@@ -25,10 +25,22 @@ class Employee extends Model
         'designation',
         'jdate',
         'status',
+        'profileName',
+        'color_id',
     ];
 
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function color()
+    {
+        return $this->hasOne(Color::class, 'id', 'color_id');
+    }
+
+    public function interview()
+    {
+        return $this->belongsTo(Interview::class);
     }
 }

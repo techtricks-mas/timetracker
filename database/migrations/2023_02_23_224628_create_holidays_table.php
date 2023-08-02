@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('holidays', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->timestamp('datestart');
-            $table->timestamp('dateend');
+            $table->timestamp('datestart')->nullable();
+            $table->timestamp('dateend')->nullable();
             $table->string('event');
             $table->timestamps();
         });

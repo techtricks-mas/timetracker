@@ -12,7 +12,10 @@ class Sidenav extends Component
     {
         if (Auth::user()->role == 'admin') {
             return view('livewire.common.Admin.sidenav');
-        } elseif (Auth::user()->role == 'employee') {
+        }elseif (Auth::user()->role == 'superadmin') {
+            return view('livewire.common.Admin.sidenav');
+        }
+        elseif (Auth::user()->role == 'employee') {
             return view('livewire.common.User.sidenav');
         } elseif (Auth::user()->role == 'candidate') {
             return view('livewire.common.Candidate.sidenav');

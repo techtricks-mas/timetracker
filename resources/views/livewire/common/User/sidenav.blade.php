@@ -16,16 +16,18 @@
 
     <div class="items-center block w-auto min-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
-            <li class="mt-0.5 w-full">
-                <a href="{{ route('user.dashboard') }}"
-                    class="py-2.7 @if ($page == 'dashboard') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors">
-                    <div
-                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                        <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
-                    </div>
-                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
-                </a>
-            </li>
+            @if (Auth::user()->role != 'employee')
+                <li class="mt-0.5 w-full">
+                    <a href="{{ route('user.dashboard') }}"
+                        class="py-2.7 @if ($page == 'dashboard') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
+                    </a>
+                </li>
+            @endif
             {{-- <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'dailywork') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                     href="{{ route('user.dailywork') }}">
@@ -48,16 +50,18 @@
                 </a>
             </li>
 
-            <li class="mt-0.5 w-full">
-                <a class=" @if ($page == 'interview') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                    href="{{ route('user.interview') }}">
-                    <div
-                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
-                    </div>
-                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Company Interview</span>
-                </a>
-            </li>
+            @if (Auth::user()->role != 'employee')
+                <li class="mt-0.5 w-full">
+                    <a class=" @if ($page == 'interview') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="{{ route('user.interview') }}">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Company Interview</span>
+                    </a>
+                </li>
+            @endif
 
             <li class="mt-0.5 w-full">
                 <a class=" @if ($page == 'candidate_interview') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -79,7 +83,16 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Holidays</span>
                 </a>
             </li>
-
+            <li class="mt-0.5 w-full">
+                <a class=" @if ($page == 'job') bg-blue-500/13 dark:text-white dark:opacity-80 text-slate-700 @else dark:text-white dark:opacity-80 @endif py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('user.job') }}">
+                    <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Job Management</span>
+                </a>
+            </li>
             <li class="w-full mt-4">
                 <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account pages
                 </h6>

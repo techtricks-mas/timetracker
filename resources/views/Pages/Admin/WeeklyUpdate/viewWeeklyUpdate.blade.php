@@ -11,7 +11,7 @@ Weekly Update List
 @section('content')
     <div class="px-10 bg-white py-5 rounded-3 shadow-lg">
         <div class="flex justify-between">
-            <h6 class="text-slate-700 text-xl">{{ strlen($data->employee_id) == 1 ? 'TSD00' . $data->employee_id : (strlen($data->employee_id) == 2 ? 'TSD0' . $data->employee_id : 'TSD' . $data->employee_id) }}  Weekly Update</h6>
+            <h6 class="text-slate-700 text-xl">{{ strlen($data->employee_id) == 1 ? 'TSW00' . $data->employee_id : (strlen($data->employee_id) == 2 ? 'TSW0' . $data->employee_id : 'TSW' . $data->employee_id) }}  Weekly Update</h6>
         </div>
         <div class="mt-6">
             <form>

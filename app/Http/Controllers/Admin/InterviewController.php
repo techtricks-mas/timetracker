@@ -8,14 +8,28 @@ use App\Models\Employee;
 use App\Models\Interview;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InterviewController extends Controller
 {
-    public function interview()
-    {
+    public function interview(Request $request)
+    { 
         $page = 'interview';
-        $data = Interview::orderBy('id', 'desc')->paginate(15);
-        return view('Pages.Admin.Interview.Interview', compact('page', 'data'));
+        $dates = Interview::select('date')->distinct()->orderBy('date', 'desc')->get();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        if($request->has('statusSearch')) {
+                $searchTerm = $request->statusSearch;
+                $data = Interview::where('status', 'LIKE', "%{$searchTerm}%")->get();
+                return view('Pages.Admin.Interview.Interview', compact('page', 'data', 'dates', 'searchTerm', 'currentdate'));    
+        } elseif  ($request->filled('dateSearch')) {
+                $searchTerm = $request->dateSearch;
+                $dateSelected = Carbon::parse($searchTerm)->format('Y-m-d');
+                $data = Interview::where('created_at', 'LIKE', "%{$dateSelected}%")->get();
+                return view('Pages.Admin.Interview.Interview', compact('page', 'data', 'dates', 'searchTerm', 'currentdate'));
+        } else  {
+                $data = Interview::orderBy('id', 'desc')->get();
+                return view('Pages.Admin.Interview.Interview', compact('page', 'data', 'dates', 'currentdate'));
+        }
     }
 
     public function addinterview()
@@ -49,25 +63,28 @@ class InterviewController extends Controller
         // Validate Interview Fields
         $request->validate(
             [
-                'employee' => 'required',
+                // 'employee' => 'required',
                 'candidate' => 'required',
                 'company' => 'required',
                 'role' => 'required',
                 'remail' => 'required',
                 'rphone' => 'required',
+                'date' => 'required'
             ],
             [
-                'employee.required' => 'Select An Employee',
+                // 'employee.required' => 'Select An Employee',
                 'candidate.required' => 'Select A Candidate',
                 'company.required' => 'Company Field Required',
                 'role.required' => 'Role Field Required',
                 'remail.required' => 'Recruiter Email Required',
-                'rphone.required' => 'Recruiter Phone Required'
+                'rphone.required' => 'Recruiter Phone Required.',
+                'date.required' => 'Date Field Required.'
             ]
         );
 
         Interview::insert([
-            'employee_id' => $request->employee,
+            // 'employee_id' => $request->employee,
+            'employee_id' => Auth::user()->id,
             'name' => $request->candidate,
             'company' => $request->company,
             'role' => $request->role,
@@ -75,6 +92,7 @@ class InterviewController extends Controller
             'rphone' => $request->rphone,
             'status' => $request->status,
             'comment' => $request->comment,
+            'date' => $request->date,
             'created_at' => Carbon::now(),
         ]);
 
@@ -86,25 +104,28 @@ class InterviewController extends Controller
         // Validate Interview Fields
         $request->validate(
             [
-                'employee' => 'required',
+                // 'employee' => 'required',
                 'candidate' => 'required',
                 'company' => 'required',
                 'role' => 'required',
                 'remail' => 'required',
                 'rphone' => 'required',
+                'date' => 'required',
             ],
             [
-                'employee.required' => 'Select An Employee',
+                // 'employee.required' => 'Select An Employee',
                 'candidate.required' => 'Select A Candidate',
                 'company.required' => 'Company Field Required',
                 'role.required' => 'Role Field Required',
                 'remail.required' => 'Recruiter Email Required',
-                'rphone.required' => 'Recruiter Phone Required'
+                'rphone.required' => 'Recruiter Phone Required',
+                'date.required' => 'Date Field Required'
             ]
         );
 
         Interview::findOrFail($request->id)->update([
-            'employee_id' => $request->employee,
+            // 'employee_id' => $request->employee,
+            'employee_id' => Auth::user()->id,
             'name' => $request->candidate,
             'company' => $request->company,
             'role' => $request->role,
@@ -112,6 +133,7 @@ class InterviewController extends Controller
             'rphone' => $request->rphone,
             'status' => $request->status,
             'comment' => $request->comment,
+            'date' => $request->date,
             'updated_at' => Carbon::now(),
         ]);
 
@@ -130,11 +152,28 @@ class InterviewController extends Controller
 
     // *******************************
 
-    public function candidate_interview()
+    public function candidate_interview(Request $request)
     {
         $page = 'candidate_interview';
-        $data = Cinterview::orderBy('id', 'desc')->paginate(15);
-        return view('Pages.Admin.Cinterview.Interview', compact('page', 'data'));
+        $Interviewdates = Cinterview::select('time')->get();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $dates = $Interviewdates->map(function ($date) {
+            return Carbon::parse($date->time)->format('Y-m-d');
+        });
+
+        if ($request->dateSearch) {
+            $searchTerm = $request->dateSearch;
+            $dateSelected = Carbon::parse($searchTerm)->format('Y-m-d');
+            $data = Cinterview::where('created_at', 'LIKE', "%{$dateSelected}%")->get();
+            return view('Pages.Admin.Cinterview.Interview', compact('page', 'data', 'dates', 'currentdate'));
+        } else if ($request->statusSearch) {
+            $searchTerm = $request->statusSearch;
+            $data = Cinterview::where('status', 'LIKE', "%{$searchTerm}%")->get();
+            return view('Pages.Admin.Cinterview.Interview', compact('page', 'data', 'dates', 'currentdate'));
+        } else {
+            $data = Cinterview::orderBy('id', 'desc')->get();
+            return view('Pages.Admin.Cinterview.Interview', compact('page', 'data', 'dates', 'currentdate'));
+        }
     }
 
     public function addcandidateinterview()
@@ -166,7 +205,7 @@ class InterviewController extends Controller
                 'role' => 'required',
                 'time' => 'required',
                 'description' => 'required',
-                'url' => 'required',
+                // 'url' => 'required',
             ],
             [
                 'name.required' => 'Candidate Name Required',
@@ -174,25 +213,27 @@ class InterviewController extends Controller
                 'role.required' => 'Role Field Required',
                 'time.required' => 'Interview Timing Required',
                 'description.required' => 'Job Description Required',
-                'url.required' => 'URL Field Required',
+                // 'url.required' => 'URL Field Required',
             ]
         );
 
+       
         Cinterview::insert([
+            // 'user_id' => $userid ? $userid : 0,
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
             'time' => $request->time,
             'description' => $request->description,
-            'url' => $request->url,
+            // 'url' => $request->url,
             'status' => $request->status,
             'reason' => $request->reason,
             'comment' => $request->comment,
             'created_at' => Carbon::now(),
         ]);
 
-        return redirect()->route('admin.addcandidateinterview')->with('message', 'Interview Inserted Successfully');
-    }
+        return redirect()->route('admin.candidate_interview')->with('message', 'Interview Inserted Successfully');
+    }                      
 
     public function updatecandidatetinterview(Request $request)
     {
@@ -203,7 +244,7 @@ class InterviewController extends Controller
                 'role' => 'required',
                 'time' => 'required',
                 'description' => 'required',
-                'url' => 'required',
+                // 'url' => 'required',
             ],
             [
                 'name.required' => 'Candidate Name Required',
@@ -211,7 +252,7 @@ class InterviewController extends Controller
                 'role.required' => 'Role Field Required',
                 'time.required' => 'Interview Timing Required',
                 'description.required' => 'Job Description Required',
-                'url.required' => 'URL Field Required',
+                // 'url.required' => 'URL Field Required',
             ]
         );
 
@@ -221,14 +262,14 @@ class InterviewController extends Controller
             'role' => $request->role,
             'time' => $request->time,
             'description' => $request->description,
-            'url' => $request->url,
+            // 'url' => $request->url, 
             'status' => $request->status,
             'reason' => $request->reason,
             'comment' => $request->comment,
             'updated_at' => Carbon::now(),
         ]);
 
-        return redirect()->route('admin.candidate_interview')->with('message', 'Interview Inserted Successfully');
+        return redirect()->route('admin.candidate_interview')->with('message', 'Interview Updated Successfully');
     }
 
     public function deletecandidateinterview($id)

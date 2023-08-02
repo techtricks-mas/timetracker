@@ -3,10 +3,10 @@
 <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
 @endsection
 @section('title')
-    Employee
+    User
 @endsection
 @section('subTitle')
-Employee List
+User List
 @endsection
 @section('CSS')
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/cute.css">
@@ -14,110 +14,101 @@ Employee List
 @section('content')
 <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
     <div class="flex justify-between">
-        <h3 class="text-black dark:text-white font-sans font-medium text-xl">Employee List</h3>
+        <h3 class="text-black dark:text-white font-sans font-medium text-xl">User List</h3>
         <a href="{{ route('admin.addemployee') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
-            Add Employee
+            Add User
         </a>
+
+    </div>
+    <div class="flex px-2 py-1 justify-between flex-wrap gap-4 mt-6">
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Active Users: 
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $employees->where('status', 1)->count() < 10 ? '0'.$employees->where('status', 1)->count() : $employees->where('status', 1)->count() }}
+            </span></p>
+
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p  class="flex-none w-1/2 inline font-medium">Inactive Users: <span class="border-b-solid text-black dark:text-white font-sans font-semibold "> {{ 
+            $employees->where('status', 2)->count() < 10 ? '0'.$employees->where('status', 2)->count() : $employees->where('status', 2)->count()
+        }}</span> </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+            <p  class="flex-none w-1/2 inline font-medium">Admin Users : <span class="border-b-solid text-black dark:text-white font-sans font-semibold "> {{ 
+                $employees->where('role', 'admin')->count() < 10 ? '0'.$employees->where('role', 'admin')->count() : $employees->where('role', 'admin')->count()
+            }}</span> </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p  class="flex-none w-1/2 inline font-medium"> Employee Users : <span class="border-b-solid text-black dark:text-white font-sans font-semibold "> {{ 
+            $employees->where('role', 'employee')->count() < 10 ? '0'.$employees->where('role', 'employee')->count() : $employees->where('role', 'employee')->count()
+        }}</span> </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+            <p  class="flex-none w-2/3 inline font-medium"> Candidate Users : <span class="border-b-solid text-black dark:text-white font-sans font-semibold "> {{ 
+                $employees->where('role', 'candidate')->count() < 10 ? '0'.$employees->where('role', 'candidate')->count() : $employees->where('role', 'candidate')->count()
+            }}</span> </p>
+            </div>
+
+
     </div>
     <div>
-        <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="flex-auto px-0 pt-0 pb-2 mt-10">
             <div class="p-0 overflow-x-auto">
-                <table class="items-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500">
-                    <thead class="align-bottom">
+                <table id="employeeTable" class="display" style="width:100%">
+                    <thead>
                         <tr>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                ID</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Full Name</th>
-                            <th
-                                class="px-6 py-3 dark:text-white pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Work Email</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Phone</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Role</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Status</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Designation</th>
-                            <th
-                                class="px-6 py-3 dark:text-white font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                            </th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Work Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Designation</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($employees as $employee)
-                        <tr class="parent">
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-white ">
-                                    {{ strlen($employee->id) == 1 ? 'TSD00'.$employee->id : (strlen($employee->id) == 2 ? 'TSD0'.$employee->id : 'TSD'.$employee->id) }}</p>
+                        <tr>
+                            <td>
+                                <span class="dark:text-white">{{ strlen($employee->id) == 1 ? 'TSD00'.$employee->id : (strlen($employee->id) == 2 ? 'TSD0'.$employee->id : 'TSD'.$employee->id) }}</span>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <div class="flex px-2 py-1">
-                                    <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 text-sm leading-normal dark:text-white">{{ $employee->fname }} {{ $employee->lname }}</h6>
-
-                                    </div>
-                                </div>
+                            <td>
+                                <span class="dark:text-white">{{ $employee->fname }} {{ $employee->lname }}</span>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-white ">
-                                    {{ $employee->workemail }}</p>
+                            <td>
+                                <span class="dark:text-white">{{ $employee->workemail }}</span>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-white ">
-                                    {{ $employee->phone }}</p>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight dark:text-white ">
-                                    {{ $employee->role }}</p>
-                            </td>
-                            <td
-                                class="p-2 text-sm leading-normal align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <select onchange="statusHandler(this, {{ $employee->id }})" class="px-3 py-2 border-0 w-full text-white border-black focus:outline-none rounded-2 @if ($employee->status == 1)
-                                    bg-emerald-500
-                                    @else
-                                    bg-red-600
-                                @endif">
+                            <td><span class="dark:text-white">{{ $employee->phone }}</span></td>
+                            <td><span class="dark:text-white">{{ $employee->role }}</span></td>
+                            <td>
+                                <select
+                                    onchange="statusHandler(this, {{ $employee->id }})"
+                                    class="px-3 py-2 border-0 w-full text-white border-black focus:outline-none rounded-2 @if ($employee->status == 1) bg-emerald-500 @else bg-red-600 @endif"
+                                >
                                     <option {{ $employee->status == 1 ? 'selected' : '' }} value="1">Active</option>
                                     <option {{ $employee->status == 2 ? 'selected' : '' }} value="2">Inactive</option>
                                 </select>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <span
-                                    class="text-xs dark:text-white font-semibold leading-tight text-slate-400">{{ $employee->designation }}</span>
+                            <td><span class="dark:text-white">{{ $employee->designation }}</span>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent flex justify-evenly">
-                                <a href="{{ route('admin.viewemployee', $employee->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.employeeedit', $employee->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a data-url="{{ route('admin.deleteemployee', $employee->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
+                            <td>
+                                <div class="align-middle bg-transparent whitespace-nowrap flex justify-evenly">
+                                    <a href="{{ route('admin.viewemployee', $employee->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.employeeedit', $employee->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a data-url="{{ route('admin.deleteemployee', $employee->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mt-5">
-                    {{ $employees->links() }}
-                </div>
             </div>
         </div>
     </div>
@@ -185,5 +176,10 @@ Employee List
                 }
             });
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#employeeTable').DataTable();
+        });
     </script>
 @endsection

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('CSS')
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/cute.css">
+    <style>
+    .fc-daygrid-event-harness {
+        right: 0 !important;
+        width: auto !important;
+    }
+    .fc-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 @endsection
 @section('background')
     <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
@@ -80,6 +91,7 @@
         </div>
     </div>
 @endsection
+
 @section('JS')
     <script src="{{ url('/') }}/assets/js/jquery.toaster.js"></script>
     <script src="{{ url('/') }}/assets/js/cute-alert.js"></script>
@@ -134,6 +146,83 @@
                 }
             },
             events: eventsArray,
+            views: {
+                list: {
+                duration: null,
+                buttonText: 'All Events',
+                }
+            },
+            eventContent: function(info) {
+                let event = info.event;
+
+                let extraInfoEl = document.createElement('div');
+                extraInfoEl.classList.add('extra-info');
+
+                const start = event.start;
+                const startDate = new Date(start);
+                let startDateEl = document.createElement('p');
+                startDateEl.classList.add('start-date');
+                startDateEl.innerText = "Start date: " + startDate.getFullYear() + '-' + (startDate.getMonth() + 1).toString().padStart(2, '0') + '-' + startDate.getDate().toString().padStart(2, '0');
+
+                const end = event.end;
+                const endDate = new Date(end);
+                let endDateEl = document.createElement('p');
+                endDateEl.classList.add('end-date');
+                endDateEl.innerText = "End date: " + endDate.getFullYear() + '-' + (endDate.getMonth() + 1).toString().padStart(2, '0') + '-' + endDate.getDate().toString().padStart(2, '0');
+
+                const created_at = event.extendedProps.created_at;
+                const date = new Date(created_at);
+                let createdAtEl = document.createElement('p');
+                createdAtEl.classList.add('created-at');
+                createdAtEl.innerText = 'Created at: ' + date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+
+                let statusEl = document.createElement('p');
+                statusEl.classList.add('status');
+                let colorStatus = document.createElement('span');
+                if (event.extendedProps.status === 'pending') {
+                    colorStatus.style.color = 'yellow'
+                }
+                else if (event.extendedProps.status === 'rejected') {
+                    colorStatus.style.color = '#ff3333'
+                }
+                else if (event.extendedProps.status === 'accepted') {
+                    colorStatus.style.color = '#00ffb0'
+                }
+                colorStatus.innerText = event.extendedProps.status;
+
+                statusEl.innerHTML = 'Status: ';
+                statusEl.appendChild(colorStatus);
+
+                extraInfoEl.appendChild(createdAtEl);
+                extraInfoEl.appendChild(startDateEl);
+                extraInfoEl.appendChild(endDateEl);
+                extraInfoEl.appendChild(statusEl);
+
+                let titleEl = document.createElement('div');
+                titleEl.classList.add('fc-title');
+                titleEl.innerText = event.title;
+
+                let contentEl = document.createElement('div');
+                contentEl.classList.add('fc-content');
+                contentEl.appendChild(titleEl);
+                contentEl.appendChild(extraInfoEl);
+
+                return { domNodes: [contentEl] };
+            },
+            viewDidMount: function(viewInfo) {
+                if (viewInfo.view.type === 'list') {
+                    const title = document.getElementsByClassName('fc-toolbar-title');
+                    title[0].innerText = ''
+                }
+            },
+            visibleRange: function(currentDate) {
+                let start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+                let end = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 3653);
+                return {
+                start: start,
+                end: end
+                };
+            },
             customButtons: {
                 myCustomButton: {
                 text: 'Add Holiday',
@@ -143,7 +232,7 @@
                 }
             },
             headerToolbar: {
-                left: 'dayGridMonth,timeGridWeek,timeGridDay',
+                left: 'dayGridMonth,timeGridWeek,timeGridDay,list',
                 center: 'title',
                 right: 'prev,next today myCustomButton'
             }
@@ -192,6 +281,10 @@
                     _token: token
                 },
                 success: function (response) {
+                    if(response.error){
+                        $.toaster(response.error, '', 'danger bg-red-500 py-3 px-2 rounded-2 text-white mb-2');
+                        return;
+                    }
                     dateStartError.style.display = 'none';
                     dateEndError.style.display = 'none';
                     eventError.style.display = 'none';
@@ -246,6 +339,10 @@
                 },
                 success: function (response) {
                     console.log(response);
+                    if(response.error){
+                        $.toaster(response.error, '', 'danger bg-red-500 py-3 px-2 rounded-2 text-white mb-2');
+                        return;
+                    }
                     dateStartError.style.display = 'none';
                     dateEndError.style.display = 'none';
                     eventError.style.display = 'none';
@@ -300,5 +397,15 @@
                 },
             });
         }
+    </script>
+    <script>
+        const dateStart = document.getElementById('dateStart');
+        const dateEnd = document.getElementById('dateEnd');
+        dateStart.addEventListener('change', () => {
+            dateEnd.min = dateStart.value;
+        })
+        dateEnd.addEventListener('change', () => {
+            dateStart.max = dateEnd.value;
+        })
     </script>
 @endsection

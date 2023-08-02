@@ -104,7 +104,7 @@ Employee List
                                 <a href="{{ url('/employee') }}/{{ $employee->id }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a href="{{ url('/employeeedit') }}/{{ $employee->id }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                <a href="{{ url('/employeeedit') }}/{{ $employee->id }}" class="py-2.5 px-3  mx-2 bg-blue-500 rounded-1 text-white">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a data-url="{{ url('/deleteemployee') }}/{{ $employee->id }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">

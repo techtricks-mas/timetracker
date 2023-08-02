@@ -15,97 +15,149 @@
 <div class="px-10 bg-white py-5 rounded-3 shadow-lg dark:bg-slate-850 dark:shadow-dark-xl">
     <div class="flex justify-between">
         <h3 class="text-black font-sans font-medium text-xl dark:text-white">Interview List</h3>
+        <!-- Search Input to Filter By Status -->
+        <form >
+            <select name="statusSearch" placeholder="Search By Status">
+                <option value="" disabled selected>Search By Status</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="in progress">In Progress</option>
+                <option value="done">Done</option>
+                <option value="selected">Selected</option>
+                <option value="rejected">Rejected</option>
+                <option value="assessment">Recieved Assessment</option>
+            </select> 
+            <button type="submit" class="px-3">
+                  <i class="fa-solid fa-search"></i>
+            </button>
+        </form>
+
+        <!-- Search Input to Filter By Date -->
+        <form>
+            <input type="date" name="dateSearch" name="dateSearch" class="py-2 rounded">
+            <button type="submit" class="px-3">
+                <i class="fa-solid fa-search"></i>
+            </button>
+        </form>
+
         <a href="{{ route('admin.addinterview') }}" class="bg-blue-500 px-5 py-2 text-[14px] text-white rounded-2 cursor-pointer">
             Add Interview
         </a>
     </div>
+
+    <!-- <div class="flex justify-between py-5">
+    </div> -->
+    <div class="flex px-2 py-1  flex-wrap gap-4 mt-6">
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium"> Total Record: 
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->count() < 10 ? '0'.$data->count() : $data->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total Schedule:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'scheduled')->count() < 10 ? '0'.$data->where('status', 'scheduled')->count() : $data->where('status', 'scheduled')->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total In Progress:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'in progress')->count() < 10 ? '0'.$data->where('status', 'in progress')->count() : $data->where('status', 'in progress')->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total Done:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'done')->count() < 10 ? '0'.$data->where('status', 'done')->count() : $data->where('status', 'done')->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total Selected:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'selected')->count() < 10 ? '0'.$data->where('status', 'selected')->count() : $data->where('status', 'selected')->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total Rejected:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'rejected')->count() < 10 ? '0'.$data->where('status', 'rejected')->count() : $data->where('status', 'rejected')->count() }}
+            </span>
+        </p>
+        </div>
+        <div class="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-xl bg-clip-border px-6 py-2">
+        <p class="flex-none w-1/2 inline font-medium">Total Recieved Assessment:
+            <span class="border-b-solid text-black dark:text-white font-sans font-semibold">
+                {{ $data->where('status', 'assessment')->count() < 10 ? '0'.$data->where('status', 'assessment')->count() : $data->where('status', 'assessment')->count() }}
+            </span>
+        </p>
+        </div>
+        </div>
     <div>
-        <div class="flex-auto px-0 pt-0 pb-2">
+        <div class="flex-auto px-0 pt-0 pb-2 mt-10">
             <div class="p-0 overflow-x-auto">
-                <table class="items-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500">
-                    <thead class="align-bottom">
+                <table id="interviewTable" class="display" style="width:100%">
+                    <thead>
                         <tr>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                ID</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Candidate Name</th>
-                            <th
-                                class="px-6 dark:text-white py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Company</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Recruiter Email</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Role</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Status</th>
-                            <th
-                                class="px-6 dark:text-white py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none  tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                            </th>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Candidate Name</th>
+                            <th>Profile Name</th>
+                            <th>Company</th>
+                            <th>Recruiter Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $item)
-                        <tr class="parent">
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ strlen($item->employee_id) == 1 ? 'TSD00'.$item->employee_id : (strlen($item->employee_id) == 2 ? 'TSD0'.$item->employee_id : 'TSD'.$item->employee_id) }}</p>
+                        <tr>
+                            <td>
+                                <span>{{ strlen($item->employee_id) == 1 ? 'TSC00'.$item->employee_id : (strlen($item->employee_id) == 2 ? 'TSC0'.$item->employee_id : 'TSC'.$item->employee_id) }}</span>
                             </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <div class="flex px-2 py-1">
-                                    <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 text-sm leading-normal  dark:text-white">{{ $item->name }}</h6>
-
-                                    </div>
+                            <td>
+                                <span>{{ \Carbon\Carbon::parse($item->created_at)->format('M d Y') }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->name }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->employee? $item->employee->profileName: '' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->company }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->remail }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->role }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->status == 'assessment' ? 'Recieved Assessment' : $item->status }}</span>
+                            </td>
+                            <td>
+                                <div class="align-middle bg-transparent whitespace-nowrap flex justify-evenly">
+                                    <a href="{{ route('admin.viewinterview', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.interviewedit', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a data-url="{{ route('admin.deletinterview', $item->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
                                 </div>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ $item->company }}</p>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ $item->remail }}</p>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <p class="mb-0 text-xs font-semibold leading-tight  dark:text-white ">
-                                    {{ $item->role }}</p>
-                            </td>
-                            <td
-                                class="p-2 text-sm leading-normal align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                <span
-                                    class="bg-gradient-to-tl capitalize @if ($item->status == 'done') from-emerald-500 to-teal-400 @elseif($item->status == 'selected') from-emerald-500 to-teal-400 @elseif($item->status == 'scheduled') from-yellow-500 to-yellow-400  @elseif($item->status == 'rejected') from-rose-500 to-red-400 @else from-yellow-500 to-yellow-400 @endif px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
-                                    {{ $item->status == 'assessment' ? 'Recieved Assessment' : $item->status }}
-                                </span>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent flex justify-evenly">
-                                <a href="{{ route('admin.viewinterview', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.interviewedit', $item->id) }}" class="py-2.5 px-3 bg-blue-500 rounded-1 text-white">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a data-url="{{ route('admin.deletinterview', $item->id) }}" onclick="confirm(this)" class="py-2.5 px-3 bg-red-500 rounded-1 text-white cursor-pointer">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mt-5">
-                    {{ $data->links() }}
-                </div>
             </div>
         </div>
     </div>
@@ -144,5 +196,10 @@
                 }
             })
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#interviewTable').DataTable();
+        });
     </script>
 @endsection
